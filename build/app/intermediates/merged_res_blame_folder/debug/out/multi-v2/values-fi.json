@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/hassan/Documents/GitHub/mr_worker/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-fi/values-fi.xml",
+            "outputFile": "/Users/hassan/Documents/GitHub/mrworker/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-fi/values-fi.xml",
             "map": [
                 {
                     "source": "/Users/hassan/.gradle/caches/transforms-3/c5ad09e0d49fe6423753be399010f082/transformed/jetified-ucrop-2.2.8/res/values-fi/values-fi.xml",

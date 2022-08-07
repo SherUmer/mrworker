@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/hassan/Documents/GitHub/mr_worker/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-es/values-es.xml",
+            "outputFile": "/Users/hassan/Documents/GitHub/mrworker/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-es/values-es.xml",
             "map": [
                 {
                     "source": "/Users/hassan/.gradle/caches/transforms-3/4ef803ba34d31dcf48df123a27eb5d76/transformed/jetified-play-services-basement-17.0.0/res/values-es/values.xml",

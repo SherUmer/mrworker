@@ -1,27 +1,8 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/hassan/Documents/GitHub/mr_worker/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "outputFile": "/Users/hassan/Documents/GitHub/mrworker/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
-                {
-                    "source": "/Users/hassan/Documents/GitHub/mr_worker/android/app/src/main/res/values/styles.xml",
-                    "from": {
-                        "startLines": "3,14",
-                        "startColumns": "4,4",
-                        "startOffsets": "173,818",
-                        "endLines": "7,16",
-                        "endColumns": "12,12",
-                        "endOffsets": "476,982"
-                    },
-                    "to": {
-                        "startLines": "1486,1491",
-                        "startColumns": "4,4",
-                        "startOffsets": "97695,98003",
-                        "endLines": "1490,1493",
-                        "endColumns": "12,12",
-                        "endOffsets": "97998,98167"
-                    }
-                },
                 {
                     "source": "/Users/hassan/.gradle/caches/transforms-3/4ef803ba34d31dcf48df123a27eb5d76/transformed/jetified-play-services-basement-17.0.0/res/values/values.xml",
                     "from": {
@@ -202,6 +183,25 @@
                         "endLines": "5,24,25,68,69,195,196,197,198,199,200,201,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,287,288,289,290,300,301,309,310,311,312,313,314,315,316,317,318,319,320,321,322,323,324,340,388,1765,1769,1770,1774,1775,1919,1920,2706,2716,2795,2816,2858,2864",
                         "endColumns": "59,71,87,68,62,69,67,71,69,60,73,72,60,60,61,63,61,60,67,99,59,65,72,68,56,51,61,71,75,64,58,58,59,59,59,59,59,59,59,59,59,59,58,59,59,59,59,59,59,59,59,59,59,58,59,59,58,58,58,58,58,58,34,34,54,62,54,57,57,60,62,56,50,49,60,56,65,33,34,34,69,70,116,12,109,12,128,71,66,24,24,24,24,24,24",
                         "endOffsets": "309,1376,1464,4517,4580,13257,13325,13397,13467,13528,13602,13675,14520,14581,14643,14707,14769,14830,14898,14998,15058,15124,15197,15266,15323,15375,15437,17394,17470,17535,17594,17653,17713,17773,17833,17893,17953,18013,18073,18133,18193,18253,18312,18372,18432,18492,18552,18612,18672,18732,18792,18852,18912,18971,19031,19091,19150,19209,19268,19327,19386,19445,19923,19958,20365,20428,20483,20541,20599,20660,20723,20780,20831,20881,20942,20999,21065,21099,21134,21169,22059,26450,119578,119779,119889,120090,120219,131586,131653,174401,174702,178976,179657,180658,180825"
+                    }
+                },
+                {
+                    "source": "/Users/hassan/Documents/GitHub/mrworker/android/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "3,14",
+                        "startColumns": "4,4",
+                        "startOffsets": "173,818",
+                        "endLines": "7,16",
+                        "endColumns": "12,12",
+                        "endOffsets": "476,982"
+                    },
+                    "to": {
+                        "startLines": "1486,1491",
+                        "startColumns": "4,4",
+                        "startOffsets": "97695,98003",
+                        "endLines": "1490,1493",
+                        "endColumns": "12,12",
+                        "endOffsets": "97998,98167"
                     }
                 },
                 {

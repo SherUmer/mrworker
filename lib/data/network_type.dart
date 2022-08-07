@@ -26,7 +26,6 @@ class NetworkTypeAheadPage extends StatelessWidget {
             print('go was hit !');
             print(newval);
             if (newval == '' ) {
-              // curl = "?city=" + getCity().toString();
               print(curl);
               Navigator.of(context).push(
                 MaterialPageRoute(

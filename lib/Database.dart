@@ -159,16 +159,16 @@ class DataBase extends ChangeNotifier {
   Map<String, dynamic> get _mapUserRegister => mapUserRegister;
 
   Future<void> uploadImage(
-    String name,
-    String email,
-    String password,
-    String phone,
-    String Bio,
-    String speciality,
-    String facebook,
-    String whatsapp,
-    String city,
-  ) async {
+      String name,
+      String email,
+      String password,
+      String phone,
+      String Bio,
+      String speciality,
+      String facebook,
+      String whatsapp,
+      String city,
+      ) async {
     String URL = 'http://192.168.18.20/mrworker/API/ui/addPost.php?name=' +
         name +
         '&email=' +
@@ -352,7 +352,7 @@ class DataBase extends ChangeNotifier {
           print('its working from here');
 
           var city = _mapLocation['results'][0]['address_components'][2]
-                  ['long_name']
+          ['long_name']
               .toString();
           print(_mapLocation['results'][0]['address_components'][2]['long_name']
               .toString());
@@ -397,7 +397,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> getCityLocation() async {
     var gotten_city = await _mapLocation['results'][0]['address_components'][2]
-            ['long_name']
+    ['long_name']
         .toString();
     Cityname = gotten_city;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -501,6 +501,7 @@ class DataBase extends ChangeNotifier {
     if (response.statusCode == 200) {
       try {
         _mapSearch = jsonDecode(response.body);
+        // print('printing map search'+response.body.toString());
         _errorSearch = false;
       } catch (e) {
         _errorSearch = true;
@@ -543,7 +544,7 @@ class DataBase extends ChangeNotifier {
     } else {
       _errorRecommendation = true;
       _errorMessageRecommendation =
-          'Error : It could be your Internet connection.';
+      'Error : It could be your Internet connection.';
       _mapRecommendation = {};
     }
     notifyListeners();
@@ -640,10 +641,10 @@ class DataBase extends ChangeNotifier {
     _mapCategory = {};
     _errorMessageCategory = '';
     _errorCategory = false;
-    _mapSearch1 = {};
-    _errorSearch1 = false;
+    _mapSearch = {};
+    _errorSearch = false;
 
-    _errorMessageSearch1 = '';
+    _errorMessageSearch = '';
 
     notifyListeners();
   }

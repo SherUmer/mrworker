@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/hassan/Documents/GitHub/mr_worker/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
+            "outputFile": "/Users/hassan/Documents/GitHub/mrworker/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
             "map": [
                 {
                     "source": "/Users/hassan/.gradle/caches/transforms-3/5bb5c542051ad7d41a6ce30144df9ca0/transformed/appcompat-1.3.0/res/values-night-v8/values-night-v8.xml",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/hassan/Documents/GitHub/mr_worker/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/Users/hassan/Documents/GitHub/mrworker/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
