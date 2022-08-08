@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mr_worker/Aut/Login.dart';
 import 'package:mr_worker/Database.dart';
-import 'package:mr_worker/Register.dart';
 import 'package:mr_worker/Splash.dart';
 import 'package:provider/provider.dart';
 
@@ -23,19 +21,12 @@ class MyApp extends StatelessWidget {
             create: (context) => DataBase(),
             builder: (context, child) {
               return MaterialApp(
-
                 title: 'Mr.Worker',
-
-
                 debugShowCheckedModeBanner: false,
                 home: Splash(),
-
-
-
               );
             }),
       ],
     );
   }
 }
-
