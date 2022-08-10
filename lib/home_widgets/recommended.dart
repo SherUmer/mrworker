@@ -25,12 +25,17 @@ class Recommended extends StatelessWidget {
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold),
               ),
-              Text(
-                'View All',
-                style: GoogleFonts.montserrat(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: const Color(0xFFa51b1f)),
+              InkWell(
+                onTap: () {
+                  print('List of All Registered Workers.');
+                },
+                child: Text(
+                  'View All',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFFa51b1f)),
+                ),
               )
             ],
           ),

@@ -24,12 +24,17 @@ class Home_Popular extends StatelessWidget {
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold),
               ),
-              Text(
-                'View All',
-                style: GoogleFonts.montserrat(
-                    color: const Color(0xFFa51b1f),
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.bold),
+              InkWell(
+                onTap: () {
+                  print('redirect to list of all categories!');
+                },
+                child: Text(
+                  'View All',
+                  style: GoogleFonts.montserrat(
+                      color: const Color(0xFFa51b1f),
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ],
           ),

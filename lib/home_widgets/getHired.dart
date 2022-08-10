@@ -45,7 +45,7 @@ class GetHired extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                print('HitMe');
+                print('Registration Page!');
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
