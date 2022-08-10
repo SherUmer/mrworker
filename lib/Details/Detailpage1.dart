@@ -48,14 +48,14 @@ class DetailPage1 extends StatelessWidget {
                 height: MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(255, 222, 218, 218),
+                  color: const Color.fromARGB(255, 222, 218, 218),
                 ),
                 child: Column(
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(map['tags'].toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                       // Row(
                       //   //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -85,7 +85,7 @@ class DetailPage1 extends StatelessWidget {
                         alignment: Alignment.topLeft,
                         child: Text(
                           map['name'].toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.purple),
@@ -96,11 +96,11 @@ class DetailPage1 extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Icon(Icons.location_on),
+                          const Icon(Icons.location_on),
                           Expanded(
                             child: Text(
                               map['area'].toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -112,8 +112,8 @@ class DetailPage1 extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         alignment: Alignment.topLeft,
-                        child: Text(
-                          'About me',
+                        child: const Text(
+                          'About ',
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -128,7 +128,7 @@ class DetailPage1 extends StatelessWidget {
                         alignment: Alignment.topLeft,
                         child: Text(
                           map['about'].toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 15,
                             // fontWeight: FontWeight.bold,
                             // color: Color.fromARGB(255, 245, 251, 249),
@@ -150,7 +150,7 @@ class DetailPage1 extends StatelessWidget {
                                 ),
                                 onPressed: () => launch("tel:" + map['phone']),
                                 child: Row(
-                                  children: [
+                                  children: const [
                                     FaIcon(
                                       FontAwesomeIcons.phone,
                                       color: Colors.blue,
@@ -178,7 +178,7 @@ class DetailPage1 extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
-                                    children: [
+                                    children: const [
                                       FaIcon(
                                         FontAwesomeIcons.whatsapp,
                                         color: Colors.green,
