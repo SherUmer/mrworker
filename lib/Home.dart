@@ -6,6 +6,8 @@ import 'package:mr_worker/Database.dart';
 import 'package:mr_worker/Details/detailpage.dart';
 import 'package:mr_worker/Details/widgets/Worker_Drawer.dart';
 import 'package:mr_worker/Register.dart';
+import 'package:mr_worker/home_widgets/emergencyServices.dart';
+import 'package:mr_worker/home_widgets/getHired.dart';
 import 'package:provider/provider.dart';
 import 'data/network_type.dart';
 import 'home_widgets/home_popular.dart';
@@ -26,7 +28,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       drawer: const Worker_Drawer(),
       appBar: AppBar(
-        backgroundColor: const Color(0xffededef),
+        backgroundColor: const Color(0xffEBECED),
         title: const Padding(
           padding: EdgeInsets.only(left: 60),
           child: Text(
@@ -124,7 +126,10 @@ class Home extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Icon(Icons.location_on),
+                      const Icon(
+                        Icons.location_on,
+                        color: Color(0xFFa51b1f),
+                      ),
                       InkWell(
                         onTap: () {
                           showDialog(
@@ -219,7 +224,12 @@ class Home extends StatelessWidget {
                         },
                         child: Consumer<DataBase>(
                           builder: (context, value, child) {
-                            return Text(dbclass.initial_city.toString());
+                            return Text(
+                              dbclass.initial_city.toString(),
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xFFa51b1f)),
+                            );
                           },
                         ),
                       ),
@@ -236,6 +246,17 @@ class Home extends StatelessWidget {
               height: 10,
             ),
             const Recommended(),
+            const SizedBox(
+              height: 10,
+            ),
+            const GetHired(),
+            const SizedBox(
+              height: 10,
+            ),
+            const EmergencyServices(),
+            const SizedBox(
+              height: 10,
+            ),
           ],
         ),
       ),
@@ -264,9 +285,11 @@ class Home extends StatelessWidget {
             }
           }
         },
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFFEBECED),
         currentIndex: 0,
         type: BottomNavigationBarType.fixed,
+        selectedItemColor: const Color(0xFFa51b1f),
+        unselectedItemColor: Colors.black87,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

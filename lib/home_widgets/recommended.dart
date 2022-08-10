@@ -17,14 +17,20 @@ class Recommended extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
                 'Top Recommendations',
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                style: GoogleFonts.montserrat(
+                    color: Colors.black,
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold),
               ),
               Text(
                 'View All',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: GoogleFonts.montserrat(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFFa51b1f)),
               )
             ],
           ),
@@ -32,7 +38,12 @@ class Recommended extends StatelessWidget {
         Consumer<DataBase>(
           builder: (context, value, child) {
             return value.mapRecommendation.isEmpty && !value.errorRecommendation
-                ? const Center(child: CircularProgressIndicator())
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.black12,
+                      backgroundColor: Colors.black12,
+                    ),
+                  )
                 : value.errorRecommendation
                     ? Text(
                         'Oops, something went wrong .${value.errorMessageRecommendation}',
@@ -72,9 +83,12 @@ class Recommended extends StatelessWidget {
                                     ),
                                   ),
                                   placeholder: (context, url) =>
-                                      CircularProgressIndicator(),
+                                      const CircularProgressIndicator(
+                                    color: Colors.black12,
+                                    backgroundColor: Colors.black12,
+                                  ),
                                   errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
+                                      const Icon(Icons.error),
                                 ),
                                 title: Text(
                                   map['name'],
@@ -83,8 +97,8 @@ class Recommended extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black),
                                 ),
-                                trailing: Icon(Icons.start),
-                                subtitle: Text(map['speciality']),
+                                trailing: Text(map['speciality']),
+                                subtitle: Text(map['city']),
                               ),
                             ),
                             //

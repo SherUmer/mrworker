@@ -1,64 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mr_worker/Api/user_api.dart';
 import 'package:mr_worker/Details/detailpage.dart';
+
 TextEditingController textController = TextEditingController();
 String newval = textController.value.toString();
 
 String curl = "?*";
 String newSetCity = '';
 
-
 class NetworkTypeAheadPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-  return
-     TypeAheadField<User?>(
-
+    return TypeAheadField<User?>(
       hideSuggestionsOnKeyboardHide: false,
       textFieldConfiguration: TextFieldConfiguration(
         controller: textController,
-          textInputAction: TextInputAction.go,
-
-          onSubmitted: (value) async {
-            newval = await value.toString();
-            print('go was hit !');
-            print(newval);
-            if (newval == '' ) {
-              print(curl);
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      detailpage(curl: curl ),
-                ),
-              );
-            }
-            if (newval != '' ) {
-              curl =  newval ;
-              print(curl);
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      detailpage(curl: curl),
-                ),
-              );
-            }
-
-
-          },
+        textInputAction: TextInputAction.go,
+        onSubmitted: (value) async {
+          newval = await value.toString();
+          print('go was hit !');
+          print(newval);
+          if (newval == '') {
+            print(curl);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) => detailpage(curl: curl),
+              ),
+            );
+          }
+          if (newval != '') {
+            curl = newval;
+            print(curl);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) => detailpage(curl: curl),
+              ),
+            );
+          }
+        },
         decoration: InputDecoration(
-
-
-
-
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-
-          hintText: 'Search here..',
+          hintStyle: GoogleFonts.montserrat(),
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          hintText: 'Search here ...',
         ),
-          ),
-       suggestionsCallback: UserApi.getUserSuggestions,
+      ),
+      suggestionsCallback: UserApi.getUserSuggestions,
       itemBuilder: (context, User? suggestion) {
         final user = suggestion!;
 
@@ -66,7 +55,7 @@ class NetworkTypeAheadPage extends StatelessWidget {
           title: Text(user.name),
         );
       },
-      noItemsFoundBuilder: (context) => Container(
+      noItemsFoundBuilder: (context) => const SizedBox(
         height: 50,
         child: Center(
           child: Text(
@@ -79,23 +68,20 @@ class NetworkTypeAheadPage extends StatelessWidget {
         final user = suggestion!;
         curl = user.name.toString();
 
-        if (curl.isEmpty ) {
+        if (curl.isEmpty) {
           // curl = "?city=" + getCity().toString();
           print(curl);
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (BuildContext context) =>
-                  detailpage(curl: curl ),
+              builder: (BuildContext context) => detailpage(curl: curl),
             ),
           );
         }
-        if (curl.isNotEmpty ) {
-
+        if (curl.isNotEmpty) {
           print(curl);
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (BuildContext context) =>
-                  detailpage(curl: curl),
+              builder: (BuildContext context) => detailpage(curl: curl),
             ),
           );
         }
@@ -106,6 +92,6 @@ class NetworkTypeAheadPage extends StatelessWidget {
             content: Text('Selected Category: ${user.name}'),
           ));
       },
-     );
-}
+    );
+  }
 }

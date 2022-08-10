@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mr_worker/Database.dart';
 import 'package:provider/provider.dart';
 
+import '../Details/DetailPage3.dart';
+
 class Home_Popular extends StatelessWidget {
   const Home_Popular({Key? key}) : super(key: key);
 
@@ -14,19 +16,19 @@ class Home_Popular extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
                 'Popular Categories',
-                style: TextStyle(
+                style: GoogleFonts.montserrat(
                     color: Colors.black,
-                    fontSize: 26.0,
+                    fontSize: 22.0,
                     fontWeight: FontWeight.bold),
               ),
               Text(
                 'View All',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15.0,
+                style: GoogleFonts.montserrat(
+                    color: const Color(0xFFa51b1f),
+                    fontSize: 12.0,
                     fontWeight: FontWeight.bold),
               ),
             ],
@@ -56,9 +58,20 @@ class Home_Popular extends StatelessWidget {
                             itemCount: value.mapPopular['popular'].length,
                             itemBuilder: (context, index) {
                               var map = value.mapPopular['popular'][index];
+                              String name = map['name'];
+
+                              var finalName = name[0].toUpperCase() +
+                                  name.substring(1).toLowerCase();
                               return InkWell(
                                 onTap: () {
-                                  print(index);
+                                  print(map['name'].toString());
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          detailpage3(
+                                              curl: map['name'].toString()),
+                                    ),
+                                  );
                                 },
                                 child: Container(
                                   // width: 150,
@@ -92,7 +105,7 @@ class Home_Popular extends StatelessWidget {
                                               bottom: 8.0,
                                               left: 18.0,
                                               right: 18.0),
-                                          child: Text(map['title'],
+                                          child: Text(finalName,
                                               style: GoogleFonts.montserrat(
                                                 textStyle: const TextStyle(
                                                     color: Colors.black,

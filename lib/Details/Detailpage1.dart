@@ -3,27 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
+
 class DetailPage1 extends StatelessWidget {
   final Map<String, dynamic> map;
 
-
-  DetailPage1({Key? key, required this.map }) : super(key: key);
+  DetailPage1({Key? key, required this.map}) : super(key: key);
   launchWhatsApp() async {
     final link = WhatsAppUnilink(
-      phoneNumber: "+92"+map['whatsapp'],
-      text: "Hey! I'm inquiring about the Services which you provid on Mr.Worker",
+      phoneNumber: "+92" + map['whatsapp'],
+      text:
+          "Hey! I'm inquiring about the Services which you provid on Mr.Worker",
     );
     // Convert the WhatsAppUnilink instance to a string.
     // Use either Dart's string interpolation or the toString() method.
     // The "launch" method is part of "url_launcher".
     await launch('$link');
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white54,
-      ),
+          backgroundColor: const Color(0xFFEBECED),
+          foregroundColor: Colors.black),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -52,9 +54,9 @@ class DetailPage1 extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(map['tags'].toString(), style: TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold)
-                      ),
+                      child: Text(map['tags'].toString(),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
                       // Row(
                       //   //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       //   children: [
@@ -92,7 +94,7 @@ class DetailPage1 extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child:  Row(
+                      child: Row(
                         children: [
                           Icon(Icons.location_on),
                           Expanded(
@@ -146,10 +148,13 @@ class DetailPage1 extends StatelessWidget {
                                   primary: Colors.grey,
                                   elevation: 5.0,
                                 ),
-                                onPressed: ()=>launch("tel:"+map['phone']),
+                                onPressed: () => launch("tel:" + map['phone']),
                                 child: Row(
                                   children: [
-                                    FaIcon(FontAwesomeIcons.phone,color: Colors.blue,),
+                                    FaIcon(
+                                      FontAwesomeIcons.phone,
+                                      color: Colors.blue,
+                                    ),
                                     Text(
                                       'Call Now',
                                       style: TextStyle(
@@ -167,25 +172,26 @@ class DetailPage1 extends StatelessWidget {
                                     primary: Colors.grey,
                                     elevation: 5.0,
                                   ),
-                                  onPressed: ()async{
+                                  onPressed: () async {
                                     await launchWhatsApp();
-
-
                                   },
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       FaIcon(
-                                        FontAwesomeIcons.whatsapp,color: Colors.green,
+                                        FontAwesomeIcons.whatsapp,
+                                        color: Colors.green,
                                       ),
-                                      Text('Whatsapp Now',style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),)
+                                      Text(
+                                        'Whatsapp Now',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      )
                                     ],
-                                  )
-                              )),
-
+                                  ))),
                         ],
                       ),
                     ),

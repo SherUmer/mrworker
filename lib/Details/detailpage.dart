@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mr_worker/Database.dart';
 import 'package:mr_worker/Details/Detailpage1.dart';
 import 'package:provider/provider.dart';
+
 class detailpage extends StatelessWidget {
   final String curl;
 
@@ -17,40 +18,47 @@ class detailpage extends StatelessWidget {
     city = db.initial_city.toString();
     context.read<DataBase>().Search(curl, city);
 
-
-
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.white54),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFEBECED),
+        foregroundColor: Colors.black,
+        title: const Text('Top Workers'),
+      ),
+
       body: FutureBuilder(
         future: db.Search(curl, city),
-        builder: (context,snapshot){
+        builder: (context, snapshot) {
           print(db.mapSearch.toString());
 
-          if(snapshot.hasData){
+          if (snapshot.hasData) {
             print('yes it has data');
-          }else{
+          } else {
             print('not shit !');
             print(curl);
             print(city);
           }
 
-          if(db.mapSearch['service_search'][0]['msg'] == null){
+          if (db.mapSearch['service_search'] == null) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.black12,
+                backgroundColor: Colors.black12,
+              ),
+            );
+          }
+
+          if (db.mapSearch['service_search'][0]['msg'] == null) {
             print('its null');
-            return
-              ListView.builder(
-                  physics: const ClampingScrollPhysics(),
-
-                  shrinkWrap: true,
-                  itemCount: db.mapSearch['service_search'].length,
-                  itemBuilder: (BuildContext context, index) {
-
-                      return SearchCard(
-                          map: db.mapSearch['service_search']
-                          [index]);
-                    }
-                );
-          }else{
-            return Center(child: Text('Sorry there is no data in This Category'));
+            return ListView.builder(
+                physics: const ClampingScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: db.mapSearch['service_search'].length,
+                itemBuilder: (BuildContext context, index) {
+                  return SearchCard(map: db.mapSearch['service_search'][index]);
+                });
+          } else {
+            return Center(
+                child: Text('Sorry there is no data in This Category'));
           }
 
           // List myList = db.mapSearch['service_search'];
@@ -68,7 +76,7 @@ class detailpage extends StatelessWidget {
           //   // return Container();
           // });
 
-            // Text(db.mapSearch['service_search'].toString());
+          // Text(db.mapSearch['service_search'].toString());
 
           //
           //   ListView.builder(
@@ -157,18 +165,13 @@ class detailpage extends StatelessWidget {
       //     },
       // ),
 
+      //
 
-    //
-
-    //
-
-
-
+      //
     );
-
-
-    }
+  }
 }
+
 class SearchCard extends StatelessWidget {
   const SearchCard({Key? key, required this.map}) : super(key: key);
 
@@ -176,7 +179,6 @@ class SearchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
@@ -215,16 +217,15 @@ class SearchCard extends StatelessWidget {
                       Text(
                         map['city'],
                         style: GoogleFonts.ubuntu(
-                            fontSize: 12.0,
-
-                            color: Colors.black),
+                            fontSize: 12.0, color: Colors.black),
                       ),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         map['name'],
                         style: GoogleFonts.ubuntu(
                             fontSize: 16.0,
-
                             fontWeight: FontWeight.bold,
                             color: Colors.black),
                       ),
@@ -240,9 +241,7 @@ class SearchCard extends StatelessWidget {
                               map['area'],
                               maxLines: 1,
                               style: GoogleFonts.ubuntu(
-                                  fontSize: 12.0,
-                                  color:
-                                  Colors.black),
+                                  fontSize: 12.0, color: Colors.black),
                             ),
                           )
                         ],
@@ -257,10 +256,9 @@ class SearchCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: Text(
-                  map['phone'] ,
+                  map['phone'],
                   style: GoogleFonts.ubuntu(
                       fontSize: 16.0,
-
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
