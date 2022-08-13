@@ -5,6 +5,12 @@ class ContactPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFEBECED),
+        foregroundColor: Colors.black,
+      ),
+      body: const Text('Contact'),
+    );
   }
 }

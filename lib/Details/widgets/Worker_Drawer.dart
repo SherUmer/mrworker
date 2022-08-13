@@ -6,6 +6,7 @@ import 'package:mr_worker/emergencyServices.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../authScreen.dart';
 import '../../contact.dart';
 
 class Worker_Drawer extends StatelessWidget {
@@ -24,7 +25,7 @@ class Worker_Drawer extends StatelessWidget {
                 image: AssetImage('assets/logo.png'),
               ),
             ),
-            child: Text('Mr worker'),
+            child: Text(''),
           ),
           ListTile(
             onTap: () {
@@ -35,10 +36,13 @@ class Worker_Drawer extends StatelessWidget {
                 ),
               );
             },
-            title: const Text('Our Services'),
+            title: const Text(
+              'Our Services',
+              style: TextStyle(color: Colors.black),
+            ),
             leading: const FaIcon(FontAwesomeIcons.servicestack),
+            iconColor: Colors.black,
           ),
-          const Divider(),
           ListTile(
             onTap: () {
               Navigator.push(
@@ -48,10 +52,13 @@ class Worker_Drawer extends StatelessWidget {
                 ),
               );
             },
-            title: const Text('Emergency Services'),
+            title: const Text(
+              'Emergency Services',
+              style: TextStyle(color: Colors.black),
+            ),
             leading: const Icon(Icons.emergency_sharp),
+            iconColor: Colors.black,
           ),
-          const Divider(),
           ListTile(
             onTap: () {
               Navigator.push(
@@ -61,10 +68,13 @@ class Worker_Drawer extends StatelessWidget {
                 ),
               );
             },
-            title: const Text('About Us'),
+            title: const Text(
+              'About Us',
+              style: TextStyle(color: Colors.black),
+            ),
             leading: const FaIcon(FontAwesomeIcons.addressCard),
+            iconColor: Colors.black,
           ),
-          const Divider(),
           ListTile(
             onTap: () {
               Navigator.push(
@@ -74,18 +84,50 @@ class Worker_Drawer extends StatelessWidget {
                 ),
               );
             },
-            title: const Text('Contact us'),
+            title: const Text(
+              'Contact us',
+              style: TextStyle(color: Colors.black),
+            ),
             leading: const FaIcon(FontAwesomeIcons.phone),
+            iconColor: Colors.black,
           ),
-          const Divider(),
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+            child: Divider(
+              color: Theme.of(context).primaryColor,
+              thickness: 1.0,
+            ),
+          ),
           (dbclass.isLoggedIn == false)
-              ? const ListTile(
-                  title: Text("Login"),
-                  leading: FaIcon(FontAwesomeIcons.unlock),
+              ? ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AuthScreen(),
+                      ),
+                    );
+                  },
+                  title: const Text(
+                    "Login",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  leading: const FaIcon(FontAwesomeIcons.unlock),
+                  iconColor: Colors.black,
                 )
-              : const ListTile(
-                  title: Text('Logout'),
-                  leading: FaIcon(FontAwesomeIcons.lock),
+              : ListTile(
+                  onTap: () {
+                    dbclass.logOut();
+                    (dbclass.isLoggedIn == false)
+                        ? Navigator.pop(context)
+                        : Navigator.pop(context);
+                  },
+                  title: const Text(
+                    'Logout',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  leading: const FaIcon(FontAwesomeIcons.lock),
+                  iconColor: Colors.black,
                 ),
           const Divider(),
           //

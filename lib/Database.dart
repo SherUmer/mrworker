@@ -20,6 +20,13 @@ class DataBase extends ChangeNotifier {
     return isLoggedIn;
   }
 
+  Future<void> logOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+    isLoggedIn = false;
+    notifyListeners();
+  }
+
   getPermission() async {
     var status = await Permission.location.status;
     if (status.isDenied) {

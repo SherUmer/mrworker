@@ -1,13 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mr_worker/Aut/Login.dart';
-import 'package:mr_worker/Aut/Profilepage.dart';
-import 'package:mr_worker/Aut/SettingPage.dart';
 import 'package:mr_worker/Database.dart';
-import 'package:mr_worker/Details/detailpage.dart';
 import 'package:mr_worker/Details/widgets/Worker_Drawer.dart';
-import 'package:mr_worker/Register.dart';
 import 'package:mr_worker/home_widgets/bottomNav.dart';
 import 'package:mr_worker/home_widgets/emergencyServices.dart';
 import 'package:mr_worker/home_widgets/getHired.dart';
