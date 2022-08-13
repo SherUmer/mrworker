@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mr_worker/home_widgets/categoryPage.dart';
 import 'package:provider/provider.dart';
 
 import '../Database.dart';
@@ -28,6 +29,12 @@ class Recommended extends StatelessWidget {
               InkWell(
                 onTap: () {
                   print('List of All Registered Workers.');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const categoryPage(
+
+                        )),);
                 },
                 child: Text(
                   'View All',

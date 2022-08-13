@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (context) => DataBase(),
             builder: (context, child) {
-              return MaterialApp(
+              return const MaterialApp(
                 title: 'Mr.Worker',
                 debugShowCheckedModeBanner: false,
                 home: Splash(),

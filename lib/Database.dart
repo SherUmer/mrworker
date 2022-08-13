@@ -8,11 +8,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DataBase extends ChangeNotifier {
   String initial_city = 'Select City';
+  bool isLoggedIn = false;
+
+  Future<bool> checkAuth() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = await prefs.getString('id');
+    if (id != '' && id != '0') {
+      isLoggedIn = true;
+    }
+    notifyListeners();
+    return isLoggedIn;
+  }
 
   getPermission() async {
     var status = await Permission.location.status;
     if (status.isDenied) {
-      print('is denied');
       if (await Permission.location.request().isGranted) {
         // Either the permission was already granted before or the user just granted it.
       }
@@ -62,10 +72,11 @@ class DataBase extends ChangeNotifier {
         if (_mapLogin.isNotEmpty && _mapLogin['message'] == "True") {
           print('yes its true from db');
           print(_mapLogin['user'][0]['id'].toString());
+          id = _mapLogin['user'][0]['id'].toString();
           name = _mapLogin['user'][0]['name'].toString();
           phone = _mapLogin['user'][0]['phone'].toString();
 
-          addAuth(name, email, password, phone, image);
+          addAuth(id, name, email, password, phone, image);
         }
       } catch (e) {
         _errorLogin = true;
@@ -93,7 +104,7 @@ class DataBase extends ChangeNotifier {
   Future<void> userRegister(String name, String email, String password,
       String phone, String image) async {
     String completeurl =
-        'http://192.168.18.20/mrworker/API/ui/addPost.php?name=' +
+        'https://bingo-agency.com/mrworker/API/registrationapi.php?name=' +
             name +
             '&email=' +
             email +
@@ -123,20 +134,18 @@ class DataBase extends ChangeNotifier {
 
         try {
           _mapRegister = jsonDecode(response.body);
+          print(_mapRegister.toString());
           _errorRegister = false;
-
-          // var gottenmapreg = jsonDecode(response.body);
-          // print(gottenmapreg);
           if (_mapRegister.isNotEmpty && _mapRegister['message'] == "True") {
             print(
                 'yes its true from db and following is printing user object.');
-            print(_mapRegister['user']['id']);
+            id = _mapRegister['user']['id'];
             name = _mapRegister['user']['name'].toString();
             email = _mapRegister['user']['email'].toString();
             phone = _mapRegister['user']['phone'].toString();
             image = _mapRegister['user']['image'].toString();
             print(_mapRegister.toString());
-            addAuth(name, email, password, phone, image);
+            addAuth(id, name, email, password, phone, image);
           }
         } catch (e) {
           _errorRegister = true;
@@ -163,28 +172,29 @@ class DataBase extends ChangeNotifier {
     String phone,
     String Bio,
     String speciality,
-    String facebook,
+    String fb_link,
     String whatsapp,
     String city,
   ) async {
-    String URL = 'http://192.168.18.20/mrworker/API/ui/addPost.php?name=' +
-        name +
-        '&email=' +
-        email +
-        '&password=' +
-        password +
-        '&phone=' +
-        phone +
-        '&about=' +
-        Bio +
-        '&speciality=' +
-        speciality +
-        '&city=' +
-        city +
-        '&facebook=' +
-        facebook +
-        '&whatsapp=' +
-        whatsapp;
+    String URL =
+        'https://bingo-agency.com/mrworker/API/registrationapi.php?name=' +
+            name +
+            '&email=' +
+            email +
+            '&password=' +
+            password +
+            '&phone=' +
+            phone +
+            '&about=' +
+            Bio +
+            '&speciality=' +
+            speciality +
+            '&city=' +
+            city +
+            '&facebook=' +
+            fb_link +
+            '&whatsapp=' +
+            whatsapp;
     // String URL = 'https://bingo-agency.com/mrworker/API/registrationapi.php?nameKhurshid%20khan&email=deshdrama@gmail.com&password=pakistan&phone=03126550536';
     print(URL);
     final response;
@@ -211,6 +221,16 @@ class DataBase extends ChangeNotifier {
       print('prinitng From Map' + mapUserRegister.toString());
       print('its 200');
       print(response.body.toString());
+
+      id = _mapRegister['user']['id'];
+      name = _mapRegister['user']['name'].toString();
+      email = _mapRegister['user']['email'].toString();
+      phone = _mapRegister['user']['phone'].toString();
+      image = _mapRegister['user']['image'].toString();
+      print(_mapRegister.toString());
+      addAuth(id, name, email, password, phone, image);
+      print(id.toString() + 'printing id');
+
       var abPost = jsonDecode(response.body);
       print(abPost.toString() + 'ab post');
       notifyListeners();
@@ -262,7 +282,7 @@ class DataBase extends ChangeNotifier {
   //   }
   //   notifyListeners();}
   //
-  String id = '';
+  var id;
   String name = '';
   String email = '';
   String phone = '';
@@ -273,6 +293,7 @@ class DataBase extends ChangeNotifier {
     name = prefs.getString('name') ?? '';
     email = prefs.getString('email') ?? '';
     password = prefs.getString('password') ?? '';
+    id = prefs.getString('id') ?? '';
 
     phone = prefs.getString('phone') ?? '';
     image = prefs.getString('image') ?? '';
@@ -291,8 +312,10 @@ class DataBase extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addAuth(name, email, password, phone, image) async {
+  void addAuth(id, name, email, password, phone, image) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('id', id);
+
     prefs.setString('name', name);
     prefs.setString('email', email);
     prefs.setString('password', password);
@@ -499,7 +522,6 @@ class DataBase extends ChangeNotifier {
     if (response.statusCode == 200) {
       try {
         _mapSearch = jsonDecode(response.body);
-        // print('printing map search'+response.body.toString());
         _errorSearch = false;
       } catch (e) {
         _errorSearch = true;
@@ -555,14 +577,12 @@ class DataBase extends ChangeNotifier {
   //   notifyListeners();
   // }
   void setCategory(city) async {
-    print(city);
     selectedvalue = city.toString();
     notifyListeners();
   }
 
   String selectedCity = 'Select City';
   void setCity(city) async {
-    print(city);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String selectedCity = (prefs.getString('initial_city') ?? 'islamabad');
     selectedCity = city.toString();
@@ -609,7 +629,6 @@ class DataBase extends ChangeNotifier {
     if (response.statusCode == 200) {
       try {
         _mapSearch1 = jsonDecode(response.body);
-        print(_mapSearch1.toString());
         _errorSearch1 = false;
       } catch (e) {
         _errorSearch1 = true;
@@ -622,6 +641,37 @@ class DataBase extends ChangeNotifier {
       _mapSearch1 = {};
     }
 
+    notifyListeners();
+  }
+
+  Map<String, dynamic> _mapViewmore = {};
+  bool _errorViewmore = false;
+  String _errorMessageViewmore = '';
+
+  Map<String, dynamic> get mapViewmore => _mapViewmore;
+
+  bool get errorViewmore => _errorViewmore;
+
+  String get errorMessageViewmore => _errorMessageViewmore;
+
+  Future<void> get ViewAll async {
+    final response = await http.get(
+      Uri.parse('https://bingo-agency.com/mrworker/API/view_more_users.php'),
+    );
+    if (response.statusCode == 200) {
+      try {
+        _mapViewmore = jsonDecode(response.body);
+        _errorViewmore = false;
+      } catch (e) {
+        _errorViewmore = true;
+        _errorMessageViewmore = e.toString();
+        _mapViewmore = {};
+      }
+    } else {
+      _errorViewmore = true;
+      _errorMessageViewmore = 'Error : It could be your Internet connection.';
+      _mapViewmore = {};
+    }
     notifyListeners();
   }
 

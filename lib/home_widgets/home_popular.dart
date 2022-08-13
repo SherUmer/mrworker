@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mr_worker/Database.dart';
+import 'package:mr_worker/home_widgets/viewall.dart';
 import 'package:provider/provider.dart';
 
 import '../Details/DetailPage3.dart';
@@ -24,10 +25,14 @@ class Home_Popular extends StatelessWidget {
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold),
               ),
-              InkWell(
-                onTap: () {
-                  print('redirect to list of all categories!');
-                },
+              InkWell(onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const viewall(
+
+                      )),);
+              },
                 child: Text(
                   'View All',
                   style: GoogleFonts.montserrat(

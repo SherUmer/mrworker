@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mr_worker/Database.dart';
@@ -36,7 +37,8 @@ class Register extends StatelessWidget {
     var facebookController =TextEditingController();
     var whatsappController = TextEditingController();
     var CategoryController =TextEditingController(text: dbclass.selectedvalue);
-    var CityController = TextEditingController(text: dbclass.selectedCity);
+    var CityController = TextEditingController(text:   dbclass.initial_city.toString(),
+    );
       return Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -347,7 +349,7 @@ class Register extends StatelessWidget {
                                 title: Text('Islamabad'),
                                 onTap: (){
 
-                                  dbclass.setCity('Islamabad');
+                                  dbclass.SetCityForSearchbar('Islamabad');
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -355,7 +357,7 @@ class Register extends StatelessWidget {
                                 title: Text('Lahore'),
                                 onTap: (){
 
-                                  dbclass.setCity('Lahore');
+                                  dbclass.SetCityForSearchbar('Lahore');
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -363,7 +365,7 @@ class Register extends StatelessWidget {
                                 title: Text('Peshawar'),
                                 onTap: (){
 
-                                  dbclass.setCity('Peshawar');
+                                  dbclass.SetCityForSearchbar('Peshawar');
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -371,7 +373,7 @@ class Register extends StatelessWidget {
                                 title: Text('karachi'),
                                 onTap: (){
 
-                                  dbclass.setCity('Karachi');
+                                  dbclass.SetCityForSearchbar('Karachi');
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -379,7 +381,7 @@ class Register extends StatelessWidget {
                                 title: Text('Quetta'),
                                 onTap: (){
 
-                                  dbclass.setCity('Quetta');
+                                  dbclass.SetCityForSearchbar('Quetta');
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -387,7 +389,7 @@ class Register extends StatelessWidget {
                                 title: Text('Azad Kashmir'),
                                 onTap: (){
 
-                                  dbclass.setCity('Azad kashmir');
+                                  dbclass.SetCityForSearchbar('Azad kashmir');
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -395,7 +397,7 @@ class Register extends StatelessWidget {
                                 title: Text('rawalpindi'),
                                 onTap: (){
 
-                                  dbclass.setCity('Rawalpindi');
+                                  dbclass.SetCityForSearchbar('Rawalpindi');
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -445,11 +447,17 @@ class Register extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [Consumer<DataBase>(builder: (context, dbData, child) {
-                          return Text(
-                            dbData.selectedCity.toString(),
-                          );
-                        }),
+                        children: [
+                          Consumer<DataBase>(
+                            builder: (context, value, child) {
+                              return Text(
+                                dbclass.initial_city.toString(),
+                                style: GoogleFonts.montserrat(
+                                    fontWeight: FontWeight.bold,
+                                    color: const Color(0xFFa51b1f)),
+                              );
+                            },
+                          ),
                           Icon(Icons.arrow_drop_down),
                         ],
                       ),
