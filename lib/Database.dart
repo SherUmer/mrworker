@@ -60,14 +60,13 @@ class DataBase extends ChangeNotifier {
   String get errorMessageLogin => _errorMessageLogin;
 
   Future<void> userLogin(String phone, String password) async {
-    String completeurl =
-        'https://bingo-agency.com/mrworker/API/loginapi.php?phone=' +
-            phone +
-            '&password=' +
-            password;
+    String completeurl = 'https://mrworker.pk/API/loginapi.php?phone=' +
+        phone +
+        '&password=' +
+        password;
     print(completeurl);
     final response = await http.get(
-      Uri.parse('https://bingo-agency.com/mrworker/API/loginapi.php?phone=' +
+      Uri.parse('https://mrworker.pk/API/loginapi.php?phone=' +
           phone +
           '&password=' +
           password),
@@ -110,17 +109,16 @@ class DataBase extends ChangeNotifier {
 
   Future<void> userRegister(String name, String email, String password,
       String phone, String image) async {
-    String completeurl =
-        'https://bingo-agency.com/mrworker/API/registrationapi.php?name=' +
-            name +
-            '&email=' +
-            email +
-            '&password=' +
-            password +
-            '&phone=' +
-            phone +
-            '&image=' +
-            image;
+    String completeurl = 'https://mrworker.pk/API/registrationapi.php?name=' +
+        name +
+        '&email=' +
+        email +
+        '&password=' +
+        password +
+        '&phone=' +
+        phone +
+        '&image=' +
+        image;
     print(completeurl);
     final response;
 
@@ -183,25 +181,24 @@ class DataBase extends ChangeNotifier {
     String whatsapp,
     String city,
   ) async {
-    String URL =
-        'https://bingo-agency.com/mrworker/API/registrationapi.php?name=' +
-            name +
-            '&email=' +
-            email +
-            '&password=' +
-            password +
-            '&phone=' +
-            phone +
-            '&about=' +
-            Bio +
-            '&speciality=' +
-            speciality +
-            '&city=' +
-            city +
-            '&facebook=' +
-            fb_link +
-            '&whatsapp=' +
-            whatsapp;
+    String URL = 'https://mrworker.pk/API/registrationapi.php?name=' +
+        name +
+        '&email=' +
+        email +
+        '&password=' +
+        password +
+        '&phone=' +
+        phone +
+        '&about=' +
+        Bio +
+        '&speciality=' +
+        speciality +
+        '&city=' +
+        city +
+        '&facebook=' +
+        fb_link +
+        '&whatsapp=' +
+        whatsapp;
     // String URL = 'https://bingo-agency.com/mrworker/API/registrationapi.php?nameKhurshid%20khan&email=deshdrama@gmail.com&password=pakistan&phone=03126550536';
     print(URL);
     final response;
@@ -457,7 +454,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> get fetchPopular async {
     final response = await http.get(
-      Uri.parse('https://bingo-agency.com/mrworker/API/popular'),
+      Uri.parse('https://mrworker.pk/API/popular'),
     );
     if (response.statusCode == 200) {
       try {
@@ -488,7 +485,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> get fetchCategory async {
     final response = await http.get(
-      Uri.parse('https://bingo-agency.com/mrworker/API/categories.php'),
+      Uri.parse('https://mrworker.pk/API/categories.php'),
     );
 
     if (response.statusCode == 200) {
@@ -520,7 +517,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> Search(String curl, String city) async {
     final response = await http.get(
-      Uri.parse('https://bingo-agency.com/mrworker/API/search?' +
+      Uri.parse('https://mrworker.pk/API/search?' +
           'city=' +
           city +
           '&type_tag=' +
@@ -557,7 +554,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> get fetchRecommendation async {
     final response = await http.get(
-      Uri.parse('https://bingo-agency.com/mrworker/API/search.php'),
+      Uri.parse('https://mrworker.pk/API/search.php'),
     );
     if (response.statusCode == 200) {
       try {
@@ -627,7 +624,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> Search1(String curl, String city) async {
     final response = await http.get(
-      Uri.parse('https://bingo-agency.com/mrworker/API/search?' +
+      Uri.parse('https://mrworker.pk/API/search?' +
           'city=' +
           city +
           '&type_tag=' +
@@ -663,7 +660,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> get ViewAll async {
     final response = await http.get(
-      Uri.parse('https://bingo-agency.com/mrworker/API/view_more_users.php'),
+      Uri.parse('https://mrworker.pk/API/view_more_users.php'),
     );
     if (response.statusCode == 200) {
       try {

@@ -25,14 +25,15 @@ class Home_Popular extends StatelessWidget {
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold),
               ),
-              InkWell(onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const viewall(
-
-                      )),);
-              },
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const viewall(),
+                    ),
+                  );
+                },
                 child: Text(
                   'View All',
                   style: GoogleFonts.montserrat(
@@ -121,7 +122,7 @@ class Home_Popular extends StatelessWidget {
                                                     color: Colors.black,
                                                     fontSize: 16.0,
                                                     fontWeight:
-                                                        FontWeight.w700),
+                                                        FontWeight.w500),
                                               ),
                                               softWrap: true),
                                         ),
