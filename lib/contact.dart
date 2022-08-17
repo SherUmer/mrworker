@@ -10,7 +10,9 @@ class ContactPage extends StatelessWidget {
         backgroundColor: const Color(0xFFEBECED),
         foregroundColor: Colors.black,
       ),
-      body: const Text('Contact'),
+      body: const Center(
+        child: Text('Contact'),
+      ),
     );
   }
 }

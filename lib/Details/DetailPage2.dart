@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -305,8 +306,8 @@ class DetailPage2 extends StatelessWidget {
                                       ),
                                     )
                                   : value.errorProjects
-                                      ? Text(
-                                          'Oops, something went wrong .${value.errorMessageProjects}',
+                                      ? const Text(
+                                          'No Records found.',
                                           textAlign: TextAlign.center,
                                         )
                                       : ListView.builder(
@@ -320,108 +321,29 @@ class DetailPage2 extends StatelessWidget {
                                             String primaryImage =
                                                 map['primary_image'];
 
-                                            return ListTile(
-                                              onTap: () async {
-                                                await showDialog(
-                                                    context: context,
-                                                    builder: (_) => imageDialog(
-                                                        'Project Gallery',
-                                                        primaryImage,
-                                                        context));
-                                              },
-                                              leading: CachedNetworkImage(
-                                                width: 70,
-                                                height: 70,
-                                                imageUrl: primaryImage,
-                                                fit: BoxFit.cover,
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.all(3.0),
+                                              child: ListTile(
+                                                onTap: () async {
+                                                  await showDialog(
+                                                      context: context,
+                                                      builder: (_) => imageDialog(
+                                                          map['title']
+                                                              .toString(),
+                                                          map['project_images'],
+                                                          context));
+                                                },
+                                                leading: CachedNetworkImage(
+                                                  width: 50,
+                                                  height: 50,
+                                                  imageUrl: primaryImage,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                                title: Text(
+                                                    map['title'].toString()),
                                               ),
-                                              title:
-                                                  Text(map['title'].toString()),
                                             );
-
-                                            //
-                                            // return InkWell(
-                                            //   onTap: () {
-                                            //     // print(
-                                            //     //     map['name'].toString());
-                                            //     // Navigator.of(context).push(
-                                            //     //   MaterialPageRoute(
-                                            //     //     builder: (BuildContext
-                                            //     //     context) =>
-                                            //     //         detailpage3(
-                                            //     //             curl: map[
-                                            //     //             'name']
-                                            //     //                 .toString()),
-                                            //     //   ),
-                                            //     // );
-                                            //   },
-                                            //   child: Container(
-                                            //     // width: 150,
-                                            //     // margin: const EdgeInsets.all(4),
-                                            //     margin:
-                                            //         const EdgeInsets.only(
-                                            //             right: 6.0,
-                                            //             left: 4.0),
-                                            //     // padding: const EdgeInsets.all(4),
-                                            //     decoration: BoxDecoration(
-                                            //         borderRadius:
-                                            //             const BorderRadius
-                                            //                 .only(
-                                            //           topRight:
-                                            //               Radius.circular(
-                                            //                   8.0),
-                                            //           bottomRight:
-                                            //               Radius.circular(
-                                            //                   8.0),
-                                            //         ),
-                                            //         color: Colors.white,
-                                            //         boxShadow: const [
-                                            //           BoxShadow(
-                                            //               color: Color(
-                                            //                   0xffd4d4d9),
-                                            //               spreadRadius: 0.5,
-                                            //               blurRadius: 2.0),
-                                            //         ],
-                                            //         border: Border.all(
-                                            //             color: Colors
-                                            //                 .black12)),
-                                            //     child: Container(
-                                            //       padding:
-                                            //           const EdgeInsets.only(
-                                            //               top: 5.0),
-                                            //       child: Column(
-                                            //         mainAxisAlignment:
-                                            //             MainAxisAlignment
-                                            //                 .start,
-                                            //         children: [
-                                            //           Padding(
-                                            //             padding:
-                                            //                 const EdgeInsets
-                                            //                         .only(
-                                            //                     top: 8.0,
-                                            //                     bottom: 8.0,
-                                            //                     left: 18.0,
-                                            //                     right:
-                                            //                         18.0),
-                                            //             child:
-                                            //                 CachedNetworkImage(
-                                            //               imageUrl:
-                                            //                   primary_image,
-                                            //               height: 70,
-                                            //               width: MediaQuery.of(
-                                            //                           context)
-                                            //                       .size
-                                            //                       .width /
-                                            //                   3,
-                                            //               fit: BoxFit.cover,
-                                            //             ),
-                                            //           ),
-                                            //         ],
-                                            //       ),
-                                            //     ),
-                                            //   ),
-                                            // );
-                                            //
                                           },
                                         );
                             },
@@ -440,7 +362,9 @@ class DetailPage2 extends StatelessWidget {
   }
 }
 
-Widget imageDialog(text, path, context) {
+Widget imageDialog(text, list, context) {
+  final List<dynamic> finalList = list;
+  print(finalList.toString());
   return Dialog(
     // backgroundColor: Colors.transparent,
     // elevation: 0,
@@ -468,13 +392,26 @@ Widget imageDialog(text, path, context) {
           ),
         ),
         SizedBox(
-          width: 220,
-          height: 200,
-          child: CachedNetworkImage(
-            imageUrl: '$path',
-            fit: BoxFit.cover,
-          ),
-        ),
+            width: 220,
+            height: 200,
+            child: CarouselSlider.builder(
+              itemCount: finalList.length,
+              itemBuilder: (context, itemIndex, realIndex) {
+                // return Text(itemIndex.toString());
+                return CachedNetworkImage(
+                  width: 220,
+                  height: 200,
+                  imageUrl: finalList[itemIndex]['image_link'],
+                  fit: BoxFit.cover,
+                );
+              },
+              options: CarouselOptions(
+                autoPlay: true,
+              ),
+            )
+            //here !
+
+            ),
       ],
     ),
   );

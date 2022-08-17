@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mr_worker/Screens/emergencyScreen.dart';
 
 class EmergencyServices extends StatelessWidget {
   const EmergencyServices({Key? key}) : super(key: key);
@@ -26,7 +27,11 @@ class EmergencyServices extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    print('Emergency Services Page');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const EmergencyScreen()),
+                    );
                   },
                   child: Text('Emergency Services',
                       style: GoogleFonts.montserrat()),

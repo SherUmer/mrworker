@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mr_worker/authScreen.dart';
 
 class GetHired extends StatelessWidget {
   const GetHired({Key? key}) : super(key: key);
@@ -45,11 +46,14 @@ class GetHired extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                print('Registration Page!');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AuthScreen()),
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('Register Today', style: GoogleFonts.montserrat()),
+                child: Text('Access Today', style: GoogleFonts.montserrat()),
               ),
             ),
           ],
