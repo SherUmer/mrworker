@@ -34,6 +34,7 @@ class DetailPage2 extends StatelessWidget {
     dbclass.fetchProjects(map['id']);
 
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 222, 218, 218),
       appBar: AppBar(
           backgroundColor: const Color(0xFFEBECED),
           foregroundColor: Colors.black),
@@ -169,7 +170,7 @@ class DetailPage2 extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text('Phone'),
-                          Text(map['Phone'].toString())
+                          Text(map['phone'].toString())
                         ],
                       ),
                     ),

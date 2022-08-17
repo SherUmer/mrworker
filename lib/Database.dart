@@ -15,6 +15,7 @@ class DataBase extends ChangeNotifier {
     var id = await prefs.getString('id');
     if (id != '' && id != '0') {
       isLoggedIn = true;
+      _getAuth();
     }
     notifyListeners();
     return isLoggedIn;
@@ -44,6 +45,7 @@ class DataBase extends ChangeNotifier {
     } else {
       print('is not dnied');
     }
+    notifyListeners();
   }
 
   double x = 0.0;
@@ -60,13 +62,14 @@ class DataBase extends ChangeNotifier {
   String get errorMessageLogin => _errorMessageLogin;
 
   Future<void> userLogin(String phone, String password) async {
-    String completeurl = 'https://mrworker.pk/API/loginapi.php?phone=' +
-        phone +
-        '&password=' +
-        password;
+    String completeurl =
+        'https://bingo-agency.com/mrworker/API/loginapi.php?phone=' +
+            phone +
+            '&password=' +
+            password;
     print(completeurl);
     final response = await http.get(
-      Uri.parse('https://mrworker.pk/API/loginapi.php?phone=' +
+      Uri.parse('https://bingo-agency.com/mrworker/API/loginapi.php?phone=' +
           phone +
           '&password=' +
           password),
@@ -81,6 +84,7 @@ class DataBase extends ChangeNotifier {
           id = _mapLogin['user'][0]['id'].toString();
           name = _mapLogin['user'][0]['name'].toString();
           phone = _mapLogin['user'][0]['phone'].toString();
+          image = _mapLogin['user'][0]['image'].toString();
 
           addAuth(id, name, email, password, phone, image);
         }
@@ -317,6 +321,7 @@ class DataBase extends ChangeNotifier {
   }
 
   void addAuth(id, name, email, password, phone, image) async {
+    print(id + ' id is being printed');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('id', id);
 

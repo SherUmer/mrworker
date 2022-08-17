@@ -118,8 +118,8 @@ class Worker_Drawer extends StatelessWidget {
                   iconColor: Colors.black,
                 )
               : ListTile(
-                  onTap: () {
-                    dbclass.logOut();
+                  onTap: () async {
+                    await dbclass.logOut();
                     (dbclass.isLoggedIn == false)
                         ? Navigator.pop(context)
                         : Navigator.pop(context);

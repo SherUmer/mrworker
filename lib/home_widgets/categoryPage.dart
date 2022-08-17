@@ -85,63 +85,6 @@ class categoryPage extends StatelessWidget {
                                 subtitle: Text(map['city']),
                               ),
                             ),
-                            //
-                            // SizedBox(
-                            //   width: 300,
-                            //   height: 300,
-                            //   child: Card(
-                            //     clipBehavior: Clip.antiAliasWithSaveLayer,
-                            //     shape: RoundedRectangleBorder(
-                            //       borderRadius: BorderRadius.circular(10.0),
-                            //     ),
-                            //     elevation: 5,
-                            //     margin: const EdgeInsets.all(10),
-                            //     child: Column(
-                            //       children: [
-                            //         SizedBox(
-                            //           width: 335,
-                            //           height: 200,
-                            //           child: Image.network(
-                            //             map['image'],
-                            //             fit: BoxFit.cover,
-                            //           ),
-                            //         ),
-                            //         Padding(
-                            //           padding: const EdgeInsets.only(top: 8.0),
-                            //           child: Container(
-                            //             alignment: Alignment.center,
-                            //             child: Text(
-                            //               map['name'],
-                            //               style: GoogleFonts.ubuntu(
-                            //                   fontSize: 16.0,
-                            //                   fontWeight: FontWeight.bold,
-                            //                   color: Colors.black),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //         Padding(
-                            //           padding: const EdgeInsets.all(8.0),
-                            //           child: Row(
-                            //             children: [Text(map['speciality'])],
-                            //           ),
-                            //         ),
-                            //         Padding(
-                            //           padding: const EdgeInsets.all(8.0),
-                            //           child: Row(
-                            //             children: [
-                            //               const Icon(
-                            //                 Icons.location_on,
-                            //                 color: Colors.black,
-                            //               ),
-                            //               Text(map['city'])
-                            //             ],
-                            //           ),
-                            //         )
-                            //       ],
-                            //     ),
-                            //   ),
-                            // ),
-                            //
                           );
                         },
                       );
@@ -151,16 +94,3 @@ class categoryPage extends StatelessWidget {
     );
   }
 }
-
-// class Category_page extends StatelessWidget {
-//   Map<String, dynamic> map;
-//    Category_page({Key? key, required this.map}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       height: 50,
-//       child:Text(map['speciality'].toString())
-//     );
-//   }
-// }

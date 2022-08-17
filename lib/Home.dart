@@ -20,6 +20,7 @@ class Home extends StatelessWidget {
     context.read<DataBase>().fetchCategory;
     context.read<DataBase>().fetchRecommendation;
     context.read<DataBase>().getCity();
+    context.read<DataBase>().checkAuth();
 
     var dbclass = context.read<DataBase>();
 

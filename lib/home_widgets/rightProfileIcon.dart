@@ -9,38 +9,58 @@ class RightProfileIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<DataBase>().checkAuth();
     var dbclass = context.read<DataBase>();
-    return (dbclass.isLoggedIn == false)
-        ? Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AuthScreen()),
-                );
-              },
-              child: CircleAvatar(
-                backgroundColor: Colors.grey,
-                radius: 50,
-                child: CachedNetworkImage(
-                  fit: BoxFit.cover,
-                  imageUrl: "https://teamworkpk.com/img/avatardefault.png",
-                ),
-              ),
-            ),
-          )
-        : Consumer<DataBase>(builder: (context, value, child) {
-            return CircleAvatar(
-              child: ClipOval(
-                child: Image.file(
-                  value.Profilepicture!,
-                  fit: BoxFit.cover,
-                  width: 50,
-                ),
-              ),
-            );
-          });
+    if (dbclass.isLoggedIn == true) {
+      print('you are logged in');
+    } else {
+      print('false');
+    }
+
+    return FutureBuilder(
+        future: dbclass.checkAuth(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData && snapshot.data == true) {
+            return (snapshot.data == false)
+                ? Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AuthScreen()),
+                        );
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          imageUrl:
+                              "https://teamworkpk.com/img/avatardefault.png",
+                        ),
+                      ),
+                    ),
+                  )
+                : CircleAvatar(
+                    radius: 50.0,
+                    child: CachedNetworkImage(
+                      imageUrl: dbclass.image,
+                      fit: BoxFit.cover,
+                      width: 50,
+                      height: 50,
+                    ),
+                  );
+
+            // Consumer<DataBase>(builder: (context, value, child) {
+            //         print('printing your image !');
+            //         print(value.image);
+            //
+            //       });
+          } else {
+            return Container();
+          }
+        });
 
     //
     //
