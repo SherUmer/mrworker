@@ -120,7 +120,7 @@ class Home_Popular extends StatelessWidget {
                                               style: GoogleFonts.montserrat(
                                                 textStyle: const TextStyle(
                                                     color: Colors.black,
-                                                    fontSize: 16.0,
+                                                    fontSize: 15.0,
                                                     fontWeight:
                                                         FontWeight.w500),
                                               ),

@@ -554,7 +554,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> get fetchRecommendation async {
     final response = await http.get(
-      Uri.parse('https://mrworker.pk/API/search.php'),
+      Uri.parse('https://bingo-agency.com/mrworker/API/search.php'),
     );
     if (response.statusCode == 200) {
       try {
@@ -580,6 +580,40 @@ class DataBase extends ChangeNotifier {
   //   value = selectedvalue;
   //   notifyListeners();
   // }
+  Map<String, dynamic> _mapProjects = {};
+  bool _errorProjects = false;
+  String _errorMessageProjects = '';
+
+  Map<String, dynamic> get mapProjects => _mapProjects;
+
+  bool get errorProjects => _errorProjects;
+
+  String get errorMessageProjects => _errorMessageProjects;
+
+  Future<void> fetchProjects(user_id) async {
+    final response = await http.get(
+      Uri.parse(
+          'https://bingo-agency.com/mrworker/API/projects?user_id=' + user_id),
+    );
+    print('https://bingo-agency.com/mrworker/API/projects?user_id=' + user_id);
+    if (response.statusCode == 200) {
+      try {
+        _mapProjects = jsonDecode(response.body);
+        print(_mapProjects);
+        _errorProjects = false;
+      } catch (e) {
+        _errorProjects = true;
+        _errorMessageProjects = e.toString();
+        _mapProjects = {};
+      }
+    } else {
+      _errorProjects = true;
+      _errorMessageProjects = 'Error : It could be your Internet connection.';
+      _mapProjects = {};
+    }
+    notifyListeners();
+  }
+
   void setCategory(city) async {
     selectedvalue = city.toString();
     notifyListeners();

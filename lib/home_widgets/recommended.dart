@@ -32,9 +32,9 @@ class Recommended extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const categoryPage(
-
-                        )),);
+                      builder: (context) => const categoryPage(),
+                    ),
+                  );
                 },
                 child: Text(
                   'View All',

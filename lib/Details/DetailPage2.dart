@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
+
+import '../Database.dart';
 
 class DetailPage2 extends StatelessWidget {
   DetailPage2({Key? key, required this.map}) : super(key: key);
@@ -13,9 +18,9 @@ class DetailPage2 extends StatelessWidget {
       text:
           "Hey! I'm inquiring about the Services which you provid on Mr.Worker",
     );
-    // Convert the WhatsAppUnilink instance to a string.
-    // Use either Dart's string interpolation or the toString() method.
-    // The "launch" method is part of "url_launcher".
+// Convert the WhatsAppUnilink instance to a string.
+// Use either Dart's string interpolation or the toString() method.
+// The "launch" method is part of "url_launcher".
     await launch('$link');
   }
 
@@ -24,6 +29,8 @@ class DetailPage2 extends StatelessWidget {
   Widget build(BuildContext context) {
     String tags = map['tags'];
     List<String> tlist = tags.split(",");
+    var dbclass = context.read<DataBase>();
+    dbclass.fetchProjects(map['id']);
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +41,6 @@ class DetailPage2 extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: const Color.fromARGB(255, 222, 218, 218),
@@ -288,81 +294,142 @@ class DetailPage2 extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            alignment: Alignment.topLeft,
-                            child: const Text(
-                              'There are no Projects added yet!',
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
+                          child: Consumer<DataBase>(
+                            builder: (context, value, child) {
+                              return value.mapProjects.isEmpty &&
+                                      !value.errorProjects
+                                  ? const Center(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.black12,
+                                        backgroundColor: Colors.black12,
+                                      ),
+                                    )
+                                  : value.errorProjects
+                                      ? Text(
+                                          'Oops, something went wrong .${value.errorMessageProjects}',
+                                          textAlign: TextAlign.center,
+                                        )
+                                      : ListView.builder(
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: value
+                                              .mapProjects['projects'].length,
+                                          itemBuilder: (context, index) {
+                                            var map = value
+                                                .mapProjects['projects'][index];
+                                            String primaryImage =
+                                                map['primary_image'];
+
+                                            return ListTile(
+                                              onTap: () async {
+                                                await showDialog(
+                                                    context: context,
+                                                    builder: (_) => imageDialog(
+                                                        'Project Gallery',
+                                                        primaryImage,
+                                                        context));
+                                              },
+                                              leading: CachedNetworkImage(
+                                                width: 70,
+                                                height: 70,
+                                                imageUrl: primaryImage,
+                                                fit: BoxFit.cover,
+                                              ),
+                                              title:
+                                                  Text(map['title'].toString()),
+                                            );
+
+                                            //
+                                            // return InkWell(
+                                            //   onTap: () {
+                                            //     // print(
+                                            //     //     map['name'].toString());
+                                            //     // Navigator.of(context).push(
+                                            //     //   MaterialPageRoute(
+                                            //     //     builder: (BuildContext
+                                            //     //     context) =>
+                                            //     //         detailpage3(
+                                            //     //             curl: map[
+                                            //     //             'name']
+                                            //     //                 .toString()),
+                                            //     //   ),
+                                            //     // );
+                                            //   },
+                                            //   child: Container(
+                                            //     // width: 150,
+                                            //     // margin: const EdgeInsets.all(4),
+                                            //     margin:
+                                            //         const EdgeInsets.only(
+                                            //             right: 6.0,
+                                            //             left: 4.0),
+                                            //     // padding: const EdgeInsets.all(4),
+                                            //     decoration: BoxDecoration(
+                                            //         borderRadius:
+                                            //             const BorderRadius
+                                            //                 .only(
+                                            //           topRight:
+                                            //               Radius.circular(
+                                            //                   8.0),
+                                            //           bottomRight:
+                                            //               Radius.circular(
+                                            //                   8.0),
+                                            //         ),
+                                            //         color: Colors.white,
+                                            //         boxShadow: const [
+                                            //           BoxShadow(
+                                            //               color: Color(
+                                            //                   0xffd4d4d9),
+                                            //               spreadRadius: 0.5,
+                                            //               blurRadius: 2.0),
+                                            //         ],
+                                            //         border: Border.all(
+                                            //             color: Colors
+                                            //                 .black12)),
+                                            //     child: Container(
+                                            //       padding:
+                                            //           const EdgeInsets.only(
+                                            //               top: 5.0),
+                                            //       child: Column(
+                                            //         mainAxisAlignment:
+                                            //             MainAxisAlignment
+                                            //                 .start,
+                                            //         children: [
+                                            //           Padding(
+                                            //             padding:
+                                            //                 const EdgeInsets
+                                            //                         .only(
+                                            //                     top: 8.0,
+                                            //                     bottom: 8.0,
+                                            //                     left: 18.0,
+                                            //                     right:
+                                            //                         18.0),
+                                            //             child:
+                                            //                 CachedNetworkImage(
+                                            //               imageUrl:
+                                            //                   primary_image,
+                                            //               height: 70,
+                                            //               width: MediaQuery.of(
+                                            //                           context)
+                                            //                       .size
+                                            //                       .width /
+                                            //                   3,
+                                            //               fit: BoxFit.cover,
+                                            //             ),
+                                            //           ),
+                                            //         ],
+                                            //       ),
+                                            //     ),
+                                            //   ),
+                                            // );
+                                            //
+                                          },
+                                        );
+                            },
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
-                  //
-                  // Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: Row(
-                  //     children: [
-                  //       Padding(
-                  //         padding: const EdgeInsets.only(left: 20.0),
-                  //         child: ElevatedButton(
-                  //           style: ElevatedButton.styleFrom(
-                  //             primary: Colors.grey,
-                  //             elevation: 5.0,
-                  //           ),
-                  //           onPressed: () => launch("tel:" + map['phone']),
-                  //           child: Row(
-                  //             children: const [
-                  //               FaIcon(
-                  //                 FontAwesomeIcons.phone,
-                  //                 color: Colors.blue,
-                  //               ),
-                  //               Text(
-                  //                 'Call Now',
-                  //                 style: TextStyle(
-                  //                   fontWeight: FontWeight.bold,
-                  //                   color: Colors.black,
-                  //                 ),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       ),
-                  //       Padding(
-                  //         padding: const EdgeInsets.only(left: 40.0),
-                  //         child: ElevatedButton(
-                  //           style: ElevatedButton.styleFrom(
-                  //             primary: Colors.grey,
-                  //             elevation: 5.0,
-                  //           ),
-                  //           onPressed: () async {
-                  //             await launchWhatsApp();
-                  //           },
-                  //           child: Row(
-                  //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //             children: const [
-                  //               FaIcon(
-                  //                 FontAwesomeIcons.whatsapp,
-                  //                 color: Colors.green,
-                  //               ),
-                  //               Text(
-                  //                 'Whatsapp Now',
-                  //                 style: TextStyle(
-                  //                   fontWeight: FontWeight.bold,
-                  //                   color: Colors.black,
-                  //                 ),
-                  //               )
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  //
                 ],
               ),
             ),
@@ -371,4 +438,44 @@ class DetailPage2 extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget imageDialog(text, path, context) {
+  return Dialog(
+    // backgroundColor: Colors.transparent,
+    // elevation: 0,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '$text',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(Icons.close_rounded),
+                color: Theme.of(context).primaryColor,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: 220,
+          height: 200,
+          child: CachedNetworkImage(
+            imageUrl: '$path',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ],
+    ),
+  );
 }
