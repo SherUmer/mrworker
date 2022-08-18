@@ -128,7 +128,7 @@ class RightProfileIcon extends StatelessWidget {
                                       ),
                                     ),
                                   );
-                                  print(' Profile Page');
+                                  print(' Edit Profile Page');
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -139,7 +139,7 @@ class RightProfileIcon extends StatelessWidget {
                                           color:
                                               Theme.of(context).primaryColor),
                                       Text(
-                                        'Edit Profile',
+                                        ' Edit Profile',
                                         style: GoogleFonts.montserrat(
                                             color: Colors.black,
                                             fontSize: 16.0),

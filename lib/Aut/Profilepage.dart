@@ -18,9 +18,17 @@ class profilepage extends StatelessWidget {
     final nameController = TextEditingController(text: dbclass.name);
     final passwordController = TextEditingController(text: dbclass.password);
     final phoneController = TextEditingController(text: dbclass.phone);
+    final emailController = TextEditingController(text: dbclass.email);
+    final aboutController = TextEditingController();
+    final cityController = TextEditingController();
+    final specialityController = TextEditingController();
+    final areaController = TextEditingController();
+    final whatsappController = TextEditingController();
+    final fblinkController = TextEditingController();
 
     return Scaffold(
         appBar: AppBar(
+            title: const Text('Edit Profile '),
             backgroundColor: const Color(0xFFEBECED),
             foregroundColor: Colors.black),
         body: Container(
@@ -104,49 +112,51 @@ class profilepage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 25.0, right: 25.0, top: 25.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: <Widget>[
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            Text(
-                                              'Personal Information',
-                                              style: GoogleFonts.ubuntu(
-                                                  fontSize: 18.0,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )),
+                                  padding: const EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 25.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Text(
+                                            'Personal Information',
+                                            style: GoogleFonts.ubuntu(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 25.0, right: 25.0, top: 25.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: <Widget>[
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            Text(
-                                              'Name',
-                                              style: GoogleFonts.ubuntu(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )),
+                                  padding: const EdgeInsets.only(
+                                      left: 25.0, right: 25.0, top: 25.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: <Widget>[
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Text(
+                                            'Name',
+                                            style: GoogleFonts.ubuntu(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       left: 25.0, right: 25.0, top: 2.0),
@@ -301,7 +311,7 @@ class profilepage extends StatelessWidget {
                   onPressed: () {},
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(

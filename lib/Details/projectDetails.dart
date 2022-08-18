@@ -13,10 +13,21 @@ class ProjectDetails extends StatelessWidget {
     var dbclass = context.read<DataBase>();
     dbclass.fetchProjects(user_id);
     return Scaffold(
+      floatingActionButton: ElevatedButton(
+        child: const Text('Add Projects'),
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+          primary: Theme.of(context).primaryColor,
+          padding:
+              const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      ),
       appBar: AppBar(
-          title: const Text('Projects'),
-          backgroundColor: const Color(0xFFEBECED),
-          foregroundColor: Colors.black),
+        title: const Text('Projects'),
+        backgroundColor: const Color(0xFFEBECED),
+        foregroundColor: Colors.black,
+      ),
       body: Consumer<DataBase>(
         builder: (context, value, child) {
           return value.mapProjects.isEmpty && !value.errorProjects
@@ -39,8 +50,7 @@ class ProjectDetails extends StatelessWidget {
                         var map = value.mapProjects['projects'][index];
                         String primaryImage = map['primary_image'];
 
-                        return Padding(
-                          padding: const EdgeInsets.all(3.0),
+                        return Card(
                           child: ListTile(
                             onTap: () async {
                               await showDialog(
@@ -51,7 +61,7 @@ class ProjectDetails extends StatelessWidget {
                                       context));
                             },
                             leading: CachedNetworkImage(
-                              width: 50,
+                              width: 60,
                               height: 50,
                               imageUrl: primaryImage,
                               fit: BoxFit.cover,
