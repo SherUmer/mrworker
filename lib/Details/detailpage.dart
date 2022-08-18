@@ -22,7 +22,7 @@ class detailpage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFFEBECED),
         foregroundColor: Colors.black,
-        title: const Text('Top Workers'),
+        title: const Text('register'),
       ),
 
       body: FutureBuilder(

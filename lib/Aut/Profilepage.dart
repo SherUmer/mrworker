@@ -5,6 +5,7 @@ import 'package:mr_worker/Aut/Login.dart';
 import 'package:provider/provider.dart';
 
 import '../Database.dart';
+
 class profilepage extends StatelessWidget {
   String id;
 
@@ -19,6 +20,9 @@ class profilepage extends StatelessWidget {
     final phoneController = TextEditingController(text: dbclass.phone);
 
     return Scaffold(
+        appBar: AppBar(
+            backgroundColor: const Color(0xFFEBECED),
+            foregroundColor: Colors.black),
         body: Container(
           color: Colors.white,
           child: ListView(
@@ -30,31 +34,32 @@ class profilepage extends StatelessWidget {
                     color: Colors.white,
                     child: Column(
                       children: <Widget>[
-                        Padding(
-                            padding: const EdgeInsets.only(left: 20.0, top: 20.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Icon(
-                                    Icons.arrow_back_ios,
-                                    color: Colors.black,
-                                    size: 22.0,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 25.0),
-                                  child: Text('PROFILE',
-                                      style: GoogleFonts.ubuntu(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20.0,
-                                          color: Colors.black)),
-                                )
-                              ],
-                            )),
+                        // Padding(
+                        //     padding:
+                        //         const EdgeInsets.only(left: 20.0, top: 20.0),
+                        //     child: Row(
+                        //       crossAxisAlignment: CrossAxisAlignment.start,
+                        //       children: <Widget>[
+                        //         InkWell(
+                        //           onTap: () {
+                        //             Navigator.pop(context);
+                        //           },
+                        //           child: const Icon(
+                        //             Icons.arrow_back_ios,
+                        //             color: Colors.black,
+                        //             size: 22.0,
+                        //           ),
+                        //         ),
+                        //         Padding(
+                        //           padding: const EdgeInsets.only(left: 25.0),
+                        //           child: Text('PROFILE',
+                        //               style: GoogleFonts.ubuntu(
+                        //                   fontWeight: FontWeight.bold,
+                        //                   fontSize: 20.0,
+                        //                   color: Colors.black)),
+                        //         )
+                        //       ],
+                        //     )),
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Stack(fit: StackFit.loose, children: <Widget>[
@@ -103,12 +108,12 @@ class profilepage extends StatelessWidget {
                                         left: 25.0, right: 25.0, top: 25.0),
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       mainAxisSize: MainAxisSize.max,
                                       children: <Widget>[
                                         Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                              MainAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.min,
                                           children: <Widget>[
                                             Text(
@@ -129,7 +134,7 @@ class profilepage extends StatelessWidget {
                                       children: <Widget>[
                                         Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                              MainAxisAlignment.start,
                                           mainAxisSize: MainAxisSize.min,
                                           children: <Widget>[
                                             Text(
@@ -166,7 +171,8 @@ class profilepage extends StatelessWidget {
                                     mainAxisSize: MainAxisSize.max,
                                     children: <Widget>[
                                       Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
                                           Text(
@@ -204,7 +210,8 @@ class profilepage extends StatelessWidget {
                                     mainAxisSize: MainAxisSize.max,
                                     children: <Widget>[
                                       Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
                                           Text(
@@ -283,7 +290,8 @@ class profilepage extends StatelessWidget {
                 ],
               ),
               Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(8)),
                 height: 40,
                 width: 60,
                 alignment: Alignment.center,
@@ -293,9 +301,12 @@ class profilepage extends StatelessWidget {
                   onPressed: () {},
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(8)),
                 height: 40,
                 width: 60,
                 alignment: Alignment.center,
@@ -310,7 +321,6 @@ class profilepage extends StatelessWidget {
                   },
                 ),
               )
-
             ],
           ),
         ));

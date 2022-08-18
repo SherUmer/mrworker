@@ -100,37 +100,40 @@ class Worker_Drawer extends StatelessWidget {
               thickness: 1.0,
             ),
           ),
-          (dbclass.isLoggedIn == false)
-              ? ListTile(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AuthScreen(),
-                      ),
-                    );
-                  },
-                  title: const Text(
-                    "Login",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  leading: const FaIcon(FontAwesomeIcons.unlock),
-                  iconColor: Colors.black,
-                )
-              : ListTile(
-                  onTap: () async {
-                    await dbclass.logOut();
-                    (dbclass.isLoggedIn == false)
-                        ? Navigator.pop(context)
-                        : Navigator.pop(context);
-                  },
-                  title: const Text(
-                    'Logout',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  leading: const FaIcon(FontAwesomeIcons.lock),
-                  iconColor: Colors.black,
-                ),
+
+          Consumer<DataBase>(builder: (context, val, child) {
+            return (val.isLoggedIn == false)
+                ? ListTile(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AuthScreen(),
+                        ),
+                      );
+                    },
+                    title: const Text(
+                      "Login",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    leading: const FaIcon(FontAwesomeIcons.unlock),
+                    iconColor: Colors.black,
+                  )
+                : ListTile(
+                    onTap: () async {
+                      await dbclass.logOut();
+                      (dbclass.isLoggedIn == false)
+                          ? Navigator.pop(context)
+                          : Navigator.pop(context);
+                    },
+                    title: const Text(
+                      'Logout',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    leading: const FaIcon(FontAwesomeIcons.lock),
+                    iconColor: Colors.black,
+                  );
+          }),
           const Divider(),
           //
           // Padding(

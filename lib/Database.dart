@@ -8,12 +8,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DataBase extends ChangeNotifier {
   String initial_city = 'Select City';
+  String initial_city1 = 'Select City';
+
   bool isLoggedIn = false;
 
   Future<bool> checkAuth() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = await prefs.getString('id');
-    if (id != '' && id != '0') {
+    if (id == '' || id == '0' || id == 0 || id == null) {
+      isLoggedIn = false;
+    } else {
+      print(id);
+      print('it just got true!');
       isLoggedIn = true;
       _getAuth();
     }
@@ -24,6 +30,7 @@ class DataBase extends ChangeNotifier {
   Future<void> logOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
+    removeUser();
     isLoggedIn = false;
     notifyListeners();
   }
@@ -85,7 +92,6 @@ class DataBase extends ChangeNotifier {
           name = _mapLogin['user'][0]['name'].toString();
           phone = _mapLogin['user'][0]['phone'].toString();
           image = _mapLogin['user'][0]['image'].toString();
-
           addAuth(id, name, email, password, phone, image);
         }
       } catch (e) {
@@ -172,6 +178,7 @@ class DataBase extends ChangeNotifier {
   }
 
   Map<String, dynamic> mapUserRegister = {};
+
   Map<String, dynamic> get _mapUserRegister => mapUserRegister;
 
   Future<void> uploadImage(
@@ -296,13 +303,14 @@ class DataBase extends ChangeNotifier {
   String phone = '';
   String password = '';
   String image = '';
+
   void _getAuth() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     name = prefs.getString('name') ?? '';
     email = prefs.getString('email') ?? '';
     password = prefs.getString('password') ?? '';
     id = prefs.getString('id') ?? '';
-
     phone = prefs.getString('phone') ?? '';
     image = prefs.getString('image') ?? '';
 
@@ -392,14 +400,14 @@ class DataBase extends ChangeNotifier {
 
         }
       } catch (e) {
-        _errorLogin = true;
-        _errorMessageLogin = e.toString();
-        _mapLogin = {};
+        _errorLocation = true;
+        _errorMessageLocation = e.toString();
+        _mapLocation = {};
       }
     } else {
-      _errorLogin = true;
-      _errorMessageLogin = 'Error : It could be your Internet connection.';
-      _mapLogin = {};
+      _errorLocation = true;
+      _errorMessageLocation = 'Error : It could be your Internet connection.';
+      _mapLocation = {};
     }
     notifyListeners();
   }
@@ -418,6 +426,7 @@ class DataBase extends ChangeNotifier {
   }
 
   var Cityname = null ?? 'Select City';
+
   getCityName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Cityname = prefs.getString('Cityname') ?? '';
@@ -439,6 +448,7 @@ class DataBase extends ChangeNotifier {
   }
 
   File? Profilepicture;
+
   Future setProfileImage(img) async {
     Profilepicture = img;
 
@@ -625,6 +635,7 @@ class DataBase extends ChangeNotifier {
   }
 
   String selectedCity = 'Select City';
+
   void setCity(city) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String selectedCity = (prefs.getString('initial_city') ?? 'islamabad');
@@ -640,6 +651,16 @@ class DataBase extends ChangeNotifier {
     initial_city = city.toString();
     notifyListeners();
     return initial_city;
+  }
+
+  Future<String> SetCityForSearchbar1(city) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    await prefs.setString('city', city);
+    // String stringValue = (prefs.getString('initial_city') ?? 'Islamabad');
+    initial_city1 = city.toString();
+    notifyListeners();
+    return initial_city1;
   }
 
   Future<String> getCity() async {
@@ -718,6 +739,73 @@ class DataBase extends ChangeNotifier {
     notifyListeners();
   }
 
+  Map<String, dynamic> _mapEmergency_Search = {};
+  bool _errorEmergency_Search = false;
+  String _errorMessageEmergency_Search = '';
+
+  Map<String, dynamic> get mapEmergency_Search => _mapEmergency_Search;
+
+  bool get errorEmergency_Search => _errorEmergency_Search;
+
+  String get errorMessageEmergency_Search => _errorMessageEmergency_Search;
+
+  Future<void> Emergency_Search(String city) async {
+    final response = await http.get(Uri.parse(
+        'https://bingo-agency.com/mrworker/API/emergency_services.php?' +
+            'city=' +
+            city));
+    if (response.statusCode == 200) {
+      try {
+        _mapEmergency_Search = jsonDecode(response.body);
+        print('Printing emergency services' + _mapEmergency_Search.toString());
+        _errorEmergency_Search = false;
+      } catch (e) {
+        _errorEmergency_Search = true;
+        _errorMessageEmergency_Search = e.toString();
+        _mapEmergency_Search = {};
+      }
+    } else {
+      _errorEmergency_Search = true;
+      _errorMessageEmergency_Search =
+          'Error : It could be your Internet connection.';
+      _mapEmergency_Search = {};
+    }
+    notifyListeners();
+  }
+
+  Map<String, dynamic> _mapUserDetail = {};
+  bool _errorUserDetail = false;
+  String _errorMessageUserDetail = '';
+
+  Map<String, dynamic> get mapUserDetail => _mapUserDetail;
+
+  bool get errorUserDetail => _errorUserDetail;
+
+  String get errorMessageUserDetail => _errorMessageUserDetail;
+
+  Future<void> UserDetail(user_id) async {
+    final response = await http.get(
+      Uri.parse('https://bingo-agency.com/mrworker/API/user_detail?user_id=' +
+          user_id),
+    );
+    if (response.statusCode == 200) {
+      try {
+        _mapUserDetail = jsonDecode(response.body);
+        print(_mapUserDetail);
+        _errorUserDetail = false;
+      } catch (e) {
+        _errorUserDetail = true;
+        _errorMessageUserDetail = e.toString();
+        _mapUserDetail = {};
+      }
+    } else {
+      _errorUserDetail = true;
+      _errorMessageUserDetail = 'Error : It could be your Internet connection.';
+      _mapUserDetail = {};
+    }
+    notifyListeners();
+  }
+
   void initialValues() {
     _mapRegister = {};
     _errorRegister = false;
@@ -736,6 +824,10 @@ class DataBase extends ChangeNotifier {
     _errorSearch = false;
 
     _errorMessageSearch = '';
+    _mapEmergency_Search = {};
+    _errorEmergency_Search = false;
+
+    _errorMessageEmergency_Search = '';
 
     notifyListeners();
   }

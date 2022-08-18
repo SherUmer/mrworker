@@ -21,18 +21,15 @@ class Mylogin extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text(
-          "Login",
-          style: GoogleFonts.ubuntu(),
-        ),
-      ),
+          title: const Text('Login'),
+          backgroundColor: const Color(0xFFEBECED),
+          foregroundColor: Colors.black),
       body: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: ListView(
             children: <Widget>[
               Container(
-                height: 350,
+                height: 320,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(10),
                 child: Row(
@@ -47,8 +44,8 @@ class Mylogin extends StatelessWidget {
                         ),
                         child: Text(
                           "Login & Find over 54,000 Workers",
-                          style: GoogleFonts.ubuntu(
-                              fontSize: 30.0,
+                          style: GoogleFonts.montserrat(
+                              fontSize: 26.0,
                               color: Theme.of(context).primaryColor),
                         ), //BoxDecoration
                       ), //Container
@@ -79,8 +76,8 @@ class Mylogin extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Text(
                   'Login',
-                  style: GoogleFonts.ubuntu(
-                      fontSize: 20, color: Theme.of(context).primaryColor),
+                  style: GoogleFonts.montserrat(
+                      fontSize: 18, color: Theme.of(context).primaryColor),
                 ),
               ),
               const SizedBox(
@@ -118,8 +115,8 @@ class Mylogin extends StatelessWidget {
                 },
                 child: Text(
                   'Forgot Password',
-                  style:
-                      GoogleFonts.ubuntu(color: Theme.of(context).primaryColor),
+                  style: GoogleFonts.montserrat(
+                      color: Theme.of(context).primaryColor),
                 ),
               ),
               Container(
@@ -144,7 +141,8 @@ class Mylogin extends StatelessWidget {
                       await showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: Text('Warning', style: GoogleFonts.ubuntu()),
+                          title:
+                              Text('Warning', style: GoogleFonts.montserrat()),
                           content: FutureBuilder(
                             future: dbclass.userLogin(email, password),
                             builder: (context, snapshot) {
@@ -152,7 +150,7 @@ class Mylogin extends StatelessWidget {
                                 return Text(
                                   snapshot.data.toString(),
                                   softWrap: true,
-                                  style: GoogleFonts.ubuntu(
+                                  style: GoogleFonts.montserrat(
                                       color: Theme.of(context).primaryColor,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16.0),
@@ -175,7 +173,7 @@ class Mylogin extends StatelessWidget {
                               },
                               child: Text(
                                 'Try again',
-                                style: GoogleFonts.ubuntu(),
+                                style: GoogleFonts.montserrat(),
                               ),
                             ),
                           ],
@@ -198,11 +196,11 @@ class Mylogin extends StatelessWidget {
                           builder: (context) => AlertDialog(
                             title: Text(
                               'Warning',
-                              style: GoogleFonts.ubuntu(),
+                              style: GoogleFonts.montserrat(),
                             ),
                             content: Text(
                               'Invalid Credentials,Login Failed',
-                              style: GoogleFonts.ubuntu(),
+                              style: GoogleFonts.montserrat(),
                             ),
                             actions: <Widget>[
                               FlatButton(
@@ -212,7 +210,7 @@ class Mylogin extends StatelessWidget {
                                 },
                                 child: Text(
                                   'Try again',
-                                  style: GoogleFonts.ubuntu(),
+                                  style: GoogleFonts.montserrat(),
                                 ),
                               ),
                             ],
@@ -231,13 +229,13 @@ class Mylogin extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     'Does not have account?',
-                    style: GoogleFonts.ubuntu(),
+                    style: GoogleFonts.montserrat(),
                   ),
                   TextButton(
                     child: Text(
                       'Register',
-                      style: GoogleFonts.ubuntu(
-                          fontSize: 20, color: Theme.of(context).primaryColor),
+                      style: GoogleFonts.montserrat(
+                          fontSize: 18, color: Theme.of(context).primaryColor),
                     ),
                     onPressed: () {
                       //signup screen

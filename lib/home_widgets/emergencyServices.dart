@@ -38,10 +38,12 @@ class EmergencyServices extends StatelessWidget {
                 ),
               ],
             ),
-            CachedNetworkImage(
-                width: MediaQuery.of(context).size.width / 2,
-                fit: BoxFit.cover,
-                imageUrl: 'https://mrworker.pk/img/emergency_services.jpeg'),
+            Expanded(
+              child: CachedNetworkImage(
+                  width: MediaQuery.of(context).size.width / 2,
+                  fit: BoxFit.cover,
+                  imageUrl: 'https://mrworker.pk/img/emergency_services.jpeg'),
+            ),
           ],
         ),
       ),

@@ -16,8 +16,10 @@ class DetailPage2 extends StatelessWidget {
   launchWhatsApp() async {
     final link = WhatsAppUnilink(
       phoneNumber: "+92" + map['whatsapp'],
-      text:
-          "Hey! I'm inquiring about the Services which you provid on Mr.Worker",
+      text: "Hey!" +
+          map['name'] +
+          "." +
+          "I'm inquiring about the Services which you provid on Mr.Worker",
     );
 // Convert the WhatsAppUnilink instance to a string.
 // Use either Dart's string interpolation or the toString() method.
@@ -26,6 +28,7 @@ class DetailPage2 extends StatelessWidget {
   }
 
   Map<String, dynamic> map;
+
   @override
   Widget build(BuildContext context) {
     String tags = map['tags'];
@@ -93,8 +96,8 @@ class DetailPage2 extends StatelessWidget {
                                       MaterialStateProperty.all<Color>(
                                           Colors.green),
                                 ),
-                                onPressed: () {
-                                  print('123');
+                                onPressed: () async {
+                                  await launchWhatsApp();
                                 },
                                 child: const Padding(
                                   padding: EdgeInsets.all(3.0),
@@ -117,9 +120,7 @@ class DetailPage2 extends StatelessWidget {
                                       MaterialStateProperty.all<Color>(
                                           Colors.blue),
                                 ),
-                                onPressed: () {
-                                  print('123');
-                                },
+                                onPressed: () => launch("tel:" + map['phone']),
                                 child: const Padding(
                                   padding: EdgeInsets.all(3.0),
                                   child: Icon(FontAwesomeIcons.phone),
@@ -150,88 +151,219 @@ class DetailPage2 extends StatelessWidget {
                         }),
                   ),
                   Card(
-                    margin: const EdgeInsets.all(3.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Name'),
-                          Text(map['name'].toString())
-                        ],
-                      ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            child: const Text(
+                              'Name',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              map['name'].toString(),
+                              style: const TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   Card(
-                    margin: const EdgeInsets.all(3.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Phone'),
-                          Text(map['phone'].toString())
-                        ],
-                      ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            child: const Text(
+                              'Phone',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              map['phone'].toString(),
+                              style: const TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   Card(
-                    margin: const EdgeInsets.all(3.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('City'),
-                          Text(map['city'].toString())
-                        ],
-                      ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            child: const Text(
+                              'City',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              map['city'].toString(),
+                              style: const TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
+                  // Card(
+                  //   margin: const EdgeInsets.all(3.0),
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(10.0),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         Row(
+                  //           children: const [
+                  //             Icon(Icons.location_on),
+                  //             Text('Area'),
+                  //           ],
+                  //         ),
+                  //         Container(
+                  //           child: Expanded(
+                  //             child: Text(
+                  //               map['area'].toString(),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   Card(
-                    margin: const EdgeInsets.all(3.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: const [
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
                               Icon(Icons.location_on),
-                              Text('Area'),
+                              Container(
+                                alignment: Alignment.topLeft,
+                                child: const Text(
+                                  'Area',
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                          Text(
-                            map['area'].toString(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              map['area'].toString(),
+                              style: const TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
+                        )
+                      ],
+                    ),
+                  ),
+
+                  Card(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            child: const Text(
+                              'Category',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              map['speciality'].toString(),
+                              style: const TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   Card(
-                    margin: const EdgeInsets.all(3.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Category'),
-                          Text(map['speciality'].toString())
-                        ],
-                      ),
-                    ),
-                  ),
-                  Card(
-                    margin: const EdgeInsets.all(3.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Email'),
-                          Text(map['email'].toString())
-                        ],
-                      ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            child: const Text(
+                              'Email',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              map['email'].toString(),
+                              style: const TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   // Padding(

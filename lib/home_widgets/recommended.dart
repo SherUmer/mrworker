@@ -71,6 +71,7 @@ class Recommended extends StatelessWidget {
                               value.mapRecommendation['service_search'][index];
                           return GestureDetector(
                             onTap: () {
+                              print(map);
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) {
@@ -79,98 +80,194 @@ class Recommended extends StatelessWidget {
                                 ),
                               );
                             },
-                            child: Card(
-                              child: ListTile(
-                                leading: CachedNetworkImage(
-                                  imageUrl: map['image'],
-                                  imageBuilder: (context, imageProvider) =>
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 10),
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: Stack(
+                                children: [
+                                  Row(
+                                    children: [
                                       Container(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.cover),
+                                        width: 100.0,
+                                        height: 100.0,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: CachedNetworkImageProvider(
+                                                map['image']),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Flexible(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              map['city'],
+                                              style: GoogleFonts.ubuntu(
+                                                  fontSize: 12.0,
+                                                  color: Colors.black),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              map['name'],
+                                              style: GoogleFonts.ubuntu(
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black),
+                                            ),
+                                            const SizedBox(height: 10),
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.location_on_outlined,
+                                                  color: Colors.black,
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    map['area'],
+                                                    maxLines: 1,
+                                                    style: GoogleFonts.ubuntu(
+                                                        fontSize: 12.0,
+                                                        color: Colors.black),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Positioned(
+                                    right: 0,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Text(
+                                        map['speciality'],
+                                        style: GoogleFonts.ubuntu(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
+                                      ),
                                     ),
-                                  ),
-                                  placeholder: (context, url) =>
-                                      const CircularProgressIndicator(
-                                    color: Colors.black12,
-                                    backgroundColor: Colors.black12,
-                                  ),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                ),
-                                title: Text(
-                                  map['name'],
-                                  style: GoogleFonts.ubuntu(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                                trailing: Text(map['speciality']),
-                                subtitle: Text(map['city']),
+                                  )
+                                ],
                               ),
                             ),
-                            //
-                            // SizedBox(
-                            //   width: 300,
-                            //   height: 300,
-                            //   child: Card(
-                            //     clipBehavior: Clip.antiAliasWithSaveLayer,
-                            //     shape: RoundedRectangleBorder(
-                            //       borderRadius: BorderRadius.circular(10.0),
-                            //     ),
-                            //     elevation: 5,
-                            //     margin: const EdgeInsets.all(10),
-                            //     child: Column(
-                            //       children: [
-                            //         SizedBox(
-                            //           width: 335,
-                            //           height: 200,
-                            //           child: Image.network(
-                            //             map['image'],
-                            //             fit: BoxFit.cover,
-                            //           ),
-                            //         ),
-                            //         Padding(
-                            //           padding: const EdgeInsets.only(top: 8.0),
-                            //           child: Container(
-                            //             alignment: Alignment.center,
-                            //             child: Text(
-                            //               map['name'],
-                            //               style: GoogleFonts.ubuntu(
-                            //                   fontSize: 16.0,
-                            //                   fontWeight: FontWeight.bold,
-                            //                   color: Colors.black),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //         Padding(
-                            //           padding: const EdgeInsets.all(8.0),
-                            //           child: Row(
-                            //             children: [Text(map['speciality'])],
-                            //           ),
-                            //         ),
-                            //         Padding(
-                            //           padding: const EdgeInsets.all(8.0),
-                            //           child: Row(
-                            //             children: [
-                            //               const Icon(
-                            //                 Icons.location_on,
-                            //                 color: Colors.black,
-                            //               ),
-                            //               Text(map['city'])
-                            //             ],
-                            //           ),
-                            //         )
-                            //       ],
-                            //     ),
-                            //   ),
-                            // ),
-                            //
                           );
+
+                          // return GestureDetector(
+                          //   onTap: () {
+                          //     Navigator.of(context).push(
+                          //       MaterialPageRoute(
+                          //         builder: (context) {
+                          //           return DetailPage2(map: map);
+                          //         },
+                          //       ),
+                          //     );
+                          //   },
+                          //   child: Card(
+                          //     child: ListTile(
+                          //       leading: CachedNetworkImage(
+                          //         imageUrl: map['image'],
+                          //         imageBuilder: (context, imageProvider) =>
+                          //             Container(
+                          //           width: 50.0,
+                          //           height: 50.0,
+                          //           decoration: BoxDecoration(
+                          //             shape: BoxShape.circle,
+                          //             image: DecorationImage(
+                          //                 image: imageProvider,
+                          //                 fit: BoxFit.cover),
+                          //           ),
+                          //         ),
+                          //         placeholder: (context, url) =>
+                          //             const CircularProgressIndicator(
+                          //           color: Colors.black12,
+                          //           backgroundColor: Colors.black12,
+                          //         ),
+                          //         errorWidget: (context, url, error) =>
+                          //             const Icon(Icons.error),
+                          //       ),
+                          //       title: Text(
+                          //         map['name'],
+                          //         style: GoogleFonts.ubuntu(
+                          //             fontSize: 16.0,
+                          //             fontWeight: FontWeight.bold,
+                          //             color: Colors.black),
+                          //       ),
+                          //       trailing: Text(map['speciality']),
+                          //       subtitle: Text(map['city']),
+                          //     ),
+                          //   ),
+                          //   //
+                          //   // SizedBox(
+                          //   //   width: 300,
+                          //   //   height: 300,
+                          //   //   child: Card(
+                          //   //     clipBehavior: Clip.antiAliasWithSaveLayer,
+                          //   //     shape: RoundedRectangleBorder(
+                          //   //       borderRadius: BorderRadius.circular(10.0),
+                          //   //     ),
+                          //   //     elevation: 5,
+                          //   //     margin: const EdgeInsets.all(10),
+                          //   //     child: Column(
+                          //   //       children: [
+                          //   //         SizedBox(
+                          //   //           width: 335,
+                          //   //           height: 200,
+                          //   //           child: Image.network(
+                          //   //             map['image'],
+                          //   //             fit: BoxFit.cover,
+                          //   //           ),
+                          //   //         ),
+                          //   //         Padding(
+                          //   //           padding: const EdgeInsets.only(top: 8.0),
+                          //   //           child: Container(
+                          //   //             alignment: Alignment.center,
+                          //   //             child: Text(
+                          //   //               map['name'],
+                          //   //               style: GoogleFonts.ubuntu(
+                          //   //                   fontSize: 16.0,
+                          //   //                   fontWeight: FontWeight.bold,
+                          //   //                   color: Colors.black),
+                          //   //             ),
+                          //   //           ),
+                          //   //         ),
+                          //   //         Padding(
+                          //   //           padding: const EdgeInsets.all(8.0),
+                          //   //           child: Row(
+                          //   //             children: [Text(map['speciality'])],
+                          //   //           ),
+                          //   //         ),
+                          //   //         Padding(
+                          //   //           padding: const EdgeInsets.all(8.0),
+                          //   //           child: Row(
+                          //   //             children: [
+                          //   //               const Icon(
+                          //   //                 Icons.location_on,
+                          //   //                 color: Colors.black,
+                          //   //               ),
+                          //   //               Text(map['city'])
+                          //   //             ],
+                          //   //           ),
+                          //   //         )
+                          //   //       ],
+                          //   //     ),
+                          //   //   ),
+                          //   // ),
+                          //   //
+                          // );
                         },
                       );
           },
