@@ -130,21 +130,23 @@ class RightProfileIcon extends StatelessWidget {
                                   );
                                   print(' Edit Profile Page');
                                 },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Icon(FontAwesomeIcons.edit,
-                                          size: 16.0,
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                      Text(
-                                        ' Edit Profile',
-                                        style: GoogleFonts.montserrat(
-                                            color: Colors.black,
-                                            fontSize: 16.0),
-                                      ),
-                                    ],
+                                child: Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Icon(FontAwesomeIcons.edit,
+                                            size: 16.0,
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                        Text(
+                                          ' Edit Profile',
+                                          style: GoogleFonts.montserrat(
+                                              color: Colors.black,
+                                              fontSize: 16.0),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
