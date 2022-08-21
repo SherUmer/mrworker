@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mr_worker/Aut/AboutPage.dart';
 import 'package:mr_worker/Database.dart';
 import 'package:mr_worker/Screens/emergencyScreen.dart';
@@ -82,7 +83,7 @@ class Worker_Drawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const ContactPage(),
+                  builder: (context) =>  ContactUs(),
                 ),
               );
             },
