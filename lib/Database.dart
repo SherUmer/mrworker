@@ -119,7 +119,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> userRegister(String name, String email, String password,
       String phone, String image) async {
-    String completeurl = 'https://mrworker.pk/API/registrationapi.php?name=' +
+    String completeurl = 'https://bingo-agency.com/mrworker/API/registrationapi.php?name=' +
         name +
         '&email=' +
         email +
@@ -182,16 +182,16 @@ class DataBase extends ChangeNotifier {
   Map<String, dynamic> get _mapUserRegister => mapUserRegister;
 
   Future<void> uploadImage(
-      String name,
-      String email,
-      String password,
-      String phone,
-      String Bio,
-      String speciality,
-      String fb_link,
-      String whatsapp,
-      String city,
-      ) async {
+    String name,
+    String email,
+    String password,
+    String phone,
+    String Bio,
+    String speciality,
+    String fb_link,
+    String whatsapp,
+    String city,
+  ) async {
     String URL = 'https://bingo-agency.com/mrworker/API/registrationapi.php?name=' +
         name +
         '&email=' +
@@ -210,30 +210,29 @@ class DataBase extends ChangeNotifier {
         fb_link +
         '&whatsapp=' +
         whatsapp;
+    // String URL = 'https://bingo-agency.com/mrworker/API/registrationapi.php?nameKhurshid%20khan&email=deshdrama@gmail.com&password=pakistan&phone=03126550536';
     print(URL);
     final response;
-    response = await http.post(Uri.parse(URL));
-    print("printing responce"+response.toString());
 
-    // if (Profilepicture == null) {
-    //   String base64Image = 'false';
-    //
-    //   String fileName = 'false';
-    //   response = await http
-    //       .post(Uri.parse(URL), body: {"image": base64Image, "name": fileName});
-    //   print(response.toString() + 'printing avatar');
-    // } else {
-    //   String base64Image = base64Encode(Profilepicture!.readAsBytesSync());
-    //   String fileName = Profilepicture!.path.split("/").last;
-    //
-    //   response = await http
-    //       .post(Uri.parse(URL), body: {"image": base64Image, "name": fileName});
-    //   print('something is picked');
-    //   print(Profilepicture.toString());
-    // }
+    if (Profilepicture == null) {
+      String base64Image = 'false';
+
+      String fileName = 'false';
+      response = await http
+          .post(Uri.parse(URL), body: {"image": base64Image, "name": fileName});
+      print(response.toString() + 'printing avatar');
+    } else {
+      String base64Image = base64Encode(Profilepicture!.readAsBytesSync());
+      String fileName = Profilepicture!.path.split("/").last;
+
+      response = await http
+          .post(Uri.parse(URL), body: {"image": base64Image, "name": fileName});
+      print('something is picked');
+      print(Profilepicture.toString());
+    }
 
     if (response.statusCode == 200) {
-      mapUserRegister = jsonDecode(response.body);
+      mapUserRegister = response.body;
       print('prinitng From Map' + mapUserRegister.toString());
       print('its 200');
       print(response.body.toString());
@@ -249,7 +248,6 @@ class DataBase extends ChangeNotifier {
 
       var abPost = jsonDecode(response.body);
       print(abPost.toString() + 'ab post');
-      print('ab ye jae ga Login py');
       notifyListeners();
     }
   }
@@ -392,7 +390,7 @@ class DataBase extends ChangeNotifier {
           print('its working from here');
 
           var city = _mapLocation['results'][0]['address_components'][2]
-          ['long_name']
+                  ['long_name']
               .toString();
           print(_mapLocation['results'][0]['address_components'][2]['long_name']
               .toString());
@@ -438,7 +436,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> getCityLocation() async {
     var gotten_city = await _mapLocation['results'][0]['address_components'][2]
-    ['long_name']
+            ['long_name']
         .toString();
     Cityname = gotten_city;
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -471,7 +469,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> get fetchPopular async {
     final response = await http.get(
-      Uri.parse('https://mrworker.pk/API/popular'),
+      Uri.parse('https://bingo-agency.com/mrworker/API/popular'),
     );
     if (response.statusCode == 200) {
       try {
@@ -502,7 +500,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> get fetchCategory async {
     final response = await http.get(
-      Uri.parse('https://mrworker.pk/API/categories.php'),
+      Uri.parse('https://bingo-agency.com/mrworker/API/categories.php'),
     );
 
     if (response.statusCode == 200) {
@@ -534,12 +532,17 @@ class DataBase extends ChangeNotifier {
 
   Future<void> Search(String curl, String city) async {
     final response = await http.get(
-      Uri.parse('https://mrworker.pk/API/search?' +
+      Uri.parse('https://bingo-agency.com/mrworker/API/search?' +
           'city=' +
           city +
           '&type_tag=' +
           curl),
     );
+    print('https://bingo-agency.com/mrworker/search?' +
+        'city=' +
+        city +
+        '&type_tag=' +
+        curl);
     if (response.statusCode == 200) {
       try {
         _mapSearch = jsonDecode(response.body);
@@ -585,7 +588,7 @@ class DataBase extends ChangeNotifier {
     } else {
       _errorRecommendation = true;
       _errorMessageRecommendation =
-      'Error : It could be your Internet connection.';
+          'Error : It could be your Internet connection.';
       _mapRecommendation = {};
     }
     notifyListeners();
@@ -686,7 +689,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> Search1(String curl, String city) async {
     final response = await http.get(
-      Uri.parse('https://mrworker.pk/API/search?' +
+      Uri.parse('https://bingo-agency.com/mrworker/API/search?' +
           'city=' +
           city +
           '&type_tag=' +
@@ -722,7 +725,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> get ViewAll async {
     final response = await http.get(
-      Uri.parse('https://mrworker.pk/API/view_more_users.php'),
+      Uri.parse('https://bingo-agency.com/mrworker/API/view_more_users.php'),
     );
     if (response.statusCode == 200) {
       try {
@@ -769,7 +772,7 @@ class DataBase extends ChangeNotifier {
     } else {
       _errorEmergency_Search = true;
       _errorMessageEmergency_Search =
-      'Error : It could be your Internet connection.';
+          'Error : It could be your Internet connection.';
       _mapEmergency_Search = {};
     }
     notifyListeners();
@@ -804,89 +807,6 @@ class DataBase extends ChangeNotifier {
       _errorUserDetail = true;
       _errorMessageUserDetail = 'Error : It could be your Internet connection.';
       _mapUserDetail = {};
-    }
-    notifyListeners();
-  }
-  Map<String, dynamic> _mapNew = {};
-  bool _errorNew = false;
-  String _errorMessageNew = '';
-
-  Map<String, dynamic> get mapNew => _mapNew;
-
-  bool get errorNew => _errorNew;
-
-  String get errorMessageNew => _errorMessageNew;
-
-  Future<void> userNew(String name, String email,String password,String about,String phone,String speciality,String city,String area,String whatsapp,String fb_link
-      ) async {
-    String completeurl =
-        'https://bingo-agency.com/mrworker/API/registrationapi.php?name=' +
-            name +
-            '&email=' +
-            email+
-            '&password=' +
-  password +
-  '&about=' +
-  about+
-            '&phone=' +
-  phone +
-  '&speciality=' +
-  speciality +
-  '&city=' +
-            city +
-            '&area=' +
-           area+
-  '&whatsapp=' +
-            whatsapp +
-            '&fb_link=' +
-            fb_link;
-    print(completeurl);
-    final response = await http.get(
-      Uri.parse('https://bingo-agency.com/mrworker/API/registrationapi.php?name=' +
-          name +
-          '&email=' +
-          email+
-          '&password=' +
-          password +
-          '&about=' +
-          about+
-          '&phone=' +
-          phone +
-          '&speciality=' +
-          speciality +
-          '&city=' +
-          city +
-          '&area=' +
-          area+
-          '&whatsapp=' +
-          whatsapp +
-          '&fb_link=' +
-          fb_link),
-    );
-    if (response.statusCode == 200) {
-      try {
-        _mapNew = jsonDecode(response.body);
-        print(_mapNew.toString());
-        _errorNew = false;
-        if (_mapNew.isNotEmpty && _mapNew['message'] == "True") {
-
-          print('yes its true from db');
-          print(_mapNew['user'][0]['id'].toString());
-          id = _mapNew['user'][0]['id'].toString();
-          name = _mapNew['user'][0]['name'].toString();
-          phone = _mapNew['user'][0]['phone'].toString();
-          image = _mapNew['user'][0]['image'].toString();
-          addAuth(id, name, email, password, phone, image);
-        }
-      } catch (e) {
-        _errorLogin = true;
-        _errorMessageLogin = e.toString();
-        _mapLogin = {};
-      }
-    } else {
-      _errorLogin = true;
-      _errorMessageLogin = 'Error : It could be your Internet connection.';
-      _mapLogin = {};
     }
     notifyListeners();
   }

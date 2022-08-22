@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mr_worker/Database.dart';
-import 'package:mr_worker/Details/DetailPage2.dart';
 import 'package:mr_worker/Details/Detailpage1.dart';
 import 'package:provider/provider.dart';
 
@@ -184,7 +183,7 @@ class SearchCard1 extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) {
-              return DetailPage2(map: map);
+              return DetailPage1(map: map);
             },
           ),
         );

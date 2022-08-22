@@ -7,7 +7,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mr_worker/Aut/Login.dart';
 import 'package:mr_worker/Database.dart';
 import 'package:mr_worker/Home.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +52,7 @@ class Register extends StatelessWidget {
                 alignment: Alignment.center,
                 child: CachedNetworkImage(
                   imageUrl:
-                  'https://bingo-agency.com/mrworker/img/slider%20copy.png',
+                      'https://bingo-agency.com/mrworker/img/slider%20copy.png',
                   height: 150,
                 )),
             SizedBox(
@@ -62,7 +61,7 @@ class Register extends StatelessWidget {
             InkWell(
               onTap: () async {
                 var pickedFile =
-                await ImagePicker().pickImage(source: ImageSource.gallery);
+                    await ImagePicker().pickImage(source: ImageSource.gallery);
                 // var cropped =await ImageCropper().cropImage(sourcePath: pickedFile!.path,
                 // aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),compressQuality: 100,
                 // maxHeight: 70,
@@ -73,54 +72,54 @@ class Register extends StatelessWidget {
               child: Consumer<DataBase>(builder: (context, value, child) {
                 return value.Profilepicture != null
                     ? Container(
-                  width: double.infinity,
-                  height: 200,
-                  child: CircleAvatar(
-                    child: ClipOval(
-                      child: Image.file(
-                        value.Profilepicture!,
-                        fit: BoxFit.cover,
-                        width: 200,
-                      ),
-                    ),
-                  ),
-                )
-                    : Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
                         width: double.infinity,
                         height: 200,
                         child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                "https://cdn2.vectorstock.com/i/1000x1000/17/61/male-avatar-profile-picture-vector-10211761.jpg "))),
-                    Container(
-                      width: 100,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.black38,
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(color: Colors.black),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Edit',
-                              style: TextStyle(color: Colors.white),
+                          child: ClipOval(
+                            child: Image.file(
+                              value.Profilepicture!,
+                              fit: BoxFit.cover,
+                              width: 200,
                             ),
-                            Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                            )
-                          ],
+                          ),
                         ),
-                      ),
-                    )
-                  ],
-                );
+                      )
+                    : Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                              width: double.infinity,
+                              height: 200,
+                              child: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      "https://cdn2.vectorstock.com/i/1000x1000/17/61/male-avatar-profile-picture-vector-10211761.jpg "))),
+                          Container(
+                            width: 100,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.black38,
+                              borderRadius: BorderRadius.circular(18),
+                              border: Border.all(color: Colors.black),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 16.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Edit',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  Icon(
+                                    Icons.edit,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      );
               }),
             ),
             SizedBox(
@@ -250,41 +249,41 @@ class Register extends StatelessWidget {
                           title: Text('Select Categories'),
                           content: Consumer<DataBase>(
                               builder: (context, value, child) {
-                                print('your value bring print hre !!! ' +
-                                    value.mapCategory.toString());
-                                return value.mapCategory.isEmpty &&
+                            print('your value bring print hre !!! ' +
+                                value.mapCategory.toString());
+                            return value.mapCategory.isEmpty &&
                                     !value.errorCategory
-                                    ? const Center(
+                                ? const Center(
                                     child: CircularProgressIndicator())
-                                    : value.errorCategory
+                                : value.errorCategory
                                     ? Text(
-                                  'Oops, something went wrong .${value.errorMessageCategory}',
-                                  textAlign: TextAlign.center,
-                                )
+                                        'Oops, something went wrong .${value.errorMessageCategory}',
+                                        textAlign: TextAlign.center,
+                                      )
                                     : Container(
-                                  height: 300,
-                                  width: 300,
-                                  child: ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: value
-                                        .mapCategory['categories'].length,
-                                    itemBuilder: (context, index) {
-                                      return ListTile(
-                                        title: Text(value
-                                            .mapCategory['categories']
-                                        [index]['title']),
-                                        onTap: () {
-                                          dbclass.setCategory(
-                                              value.mapCategory[
-                                              'categories'][index]
-                                              ['title']);
-                                          Navigator.of(context).pop();
-                                        },
+                                        height: 300,
+                                        width: 300,
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: value
+                                              .mapCategory['categories'].length,
+                                          itemBuilder: (context, index) {
+                                            return ListTile(
+                                              title: Text(value
+                                                      .mapCategory['categories']
+                                                  [index]['title']),
+                                              onTap: () {
+                                                dbclass.setCategory(
+                                                    value.mapCategory[
+                                                            'categories'][index]
+                                                        ['title']);
+                                                Navigator.of(context).pop();
+                                              },
+                                            );
+                                          },
+                                        ),
                                       );
-                                    },
-                                  ),
-                                );
-                              }));
+                          }));
                       // return AlertDialog(
                       //   title: Text('Select Services'),
                       //   content: SingleChildScrollView(
@@ -490,99 +489,21 @@ class Register extends StatelessWidget {
               alignment: Alignment.center,
               child: ElevatedButton(
                 onPressed: () async {
-
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Home()));
                   var name = nameController.text.toString();
                   var email = emailController.text.toString();
                   var password = passwordController.text.toString();
-                  var Bio = AboutController.text.toString();
                   var phone = PhoneNumberController.text.toString();
+                  var Bio = AboutController.text.toString();
                   var speciality = CategoryController.text.toString();
-
-                  var city = CityController.text.toString();
-                  var area = city.toString();
+                  var facebook = facebookController.text.toString();
                   var whatsapp = whatsappController.text.toString();
+                  var city = CityController.text.toString();
 
-                  var fb_link = facebookController.text.toString();
-
-                  await dbclass.userNew(name, email, password, Bio, phone, speciality, city, area, whatsapp, fb_link);
-    map = dbclass.mapNew;
-    message = dbclass.mapNew['message'].toString();
-    print(message);
-    print('printing user');
-    print(dbclass.mapNew
-    ['user'].toString());
-    //checking map if its empty or shit
-    if (map.isEmpty) {
-    print('map is empty');
-
-    await showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-    title: Text('Warning', style: GoogleFonts.ubuntu()),
-    content: FutureBuilder(
-    future: dbclass.userNew(name, email, password, Bio, phone, speciality, city, area, whatsapp, fb_link),
-    builder: (context, snapshot) {
-    if (snapshot.hasData) {
-    return Text(
-    snapshot.data.toString(),
-    softWrap: true,
-    style: GoogleFonts.ubuntu(
-    color: Theme.of(context).primaryColor,
-    fontWeight: FontWeight.bold,
-    fontSize: 16.0),
-    );
-    } else {
-    return const SizedBox(
-    height: 100,
-    child: Center(
-    child: CircularProgressIndicator(),
-    ),
-    );
-    }
-    },
-    ),
-    actions: <Widget>[
-    FlatButton(
-    onPressed: () {
-    Navigator.of(context, rootNavigator: true)
-        .pop(); // dismisses only the dialog and returns nothing
-    },
-    child: Text('Try again'),
-    ),
-    ],
-    ),
-    );
-    } else {
-    if (message.isNotEmpty && message == 'True') {
-    //shared prefs !!!
-
-    print('True');
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-    builder: (BuildContext context) => const Mylogin()));
-    } else if (message.isNotEmpty && message != 'True') {
-    print('False');
-    await showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-    title: Text('Warning'),
-    content: Text(message.toString()),
-    actions: <Widget>[
-    FlatButton(
-    onPressed: () {
-    Navigator.of(context, rootNavigator: true)
-        .pop(); // dismisses only the dialog and returns nothing
-    },
-    child: Text('Try again'),
-    ),
-    ],
-    ),
-    );
-    }
-    }
-    },
-
-
-
+                  await dbclass.uploadImage(name, email, password, phone, Bio,
+                      speciality, facebook, whatsapp, city);
+                },
                 child: Text('Register'),
                 style: ElevatedButton.styleFrom(primary: Colors.grey),
               ),

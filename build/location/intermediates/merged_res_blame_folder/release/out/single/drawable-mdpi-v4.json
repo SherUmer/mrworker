@@ -1,15 +1,15 @@
 [
     {
         "merged": "/Users/hassan/Documents/GitHub/mrworker/build/location/intermediates/merged_res/release/drawable-mdpi-v4/googleg_disabled_color_18.png",
-        "source": "/Users/hassan/.gradle/caches/transforms-3/7fe54f641cc9e5030b521a76e877b0ca/transformed/jetified-play-services-base-16.0.1/res/drawable-mdpi-v4/googleg_disabled_color_18.png"
+        "source": "/Users/hassan/.gradle/caches/transforms-3/2c53c1f86170942894f7f0b3d1fe6917/transformed/jetified-play-services-base-16.0.1/res/drawable-mdpi-v4/googleg_disabled_color_18.png"
     },
     {
         "merged": "/Users/hassan/Documents/GitHub/mrworker/build/location/intermediates/merged_res/release/drawable-mdpi-v4/googleg_standard_color_18.png",
-        "source": "/Users/hassan/.gradle/caches/transforms-3/7fe54f641cc9e5030b521a76e877b0ca/transformed/jetified-play-services-base-16.0.1/res/drawable-mdpi-v4/googleg_standard_color_18.png"
+        "source": "/Users/hassan/.gradle/caches/transforms-3/2c53c1f86170942894f7f0b3d1fe6917/transformed/jetified-play-services-base-16.0.1/res/drawable-mdpi-v4/googleg_standard_color_18.png"
     },
     {
         "merged": "/Users/hassan/Documents/GitHub/mrworker/build/location/intermediates/merged_res/release/drawable-mdpi-v4/common_google_signin_btn_icon_dark_normal_background.9.png",
-        "source": "/Users/hassan/.gradle/caches/transforms-3/7fe54f641cc9e5030b521a76e877b0ca/transformed/jetified-play-services-base-16.0.1/res/drawable-mdpi-v4/common_google_signin_btn_icon_dark_normal_background.9.png"
+        "source": "/Users/hassan/.gradle/caches/transforms-3/2c53c1f86170942894f7f0b3d1fe6917/transformed/jetified-play-services-base-16.0.1/res/drawable-mdpi-v4/common_google_signin_btn_icon_dark_normal_background.9.png"
     },
     {
         "merged": "/Users/hassan/Documents/GitHub/mrworker/build/location/intermediates/merged_res/release/drawable-mdpi-v4/notification_bg_normal_pressed.9.png",
@@ -17,7 +17,7 @@
     },
     {
         "merged": "/Users/hassan/Documents/GitHub/mrworker/build/location/intermediates/merged_res/release/drawable-mdpi-v4/common_google_signin_btn_icon_light_normal_background.9.png",
-        "source": "/Users/hassan/.gradle/caches/transforms-3/7fe54f641cc9e5030b521a76e877b0ca/transformed/jetified-play-services-base-16.0.1/res/drawable-mdpi-v4/common_google_signin_btn_icon_light_normal_background.9.png"
+        "source": "/Users/hassan/.gradle/caches/transforms-3/2c53c1f86170942894f7f0b3d1fe6917/transformed/jetified-play-services-base-16.0.1/res/drawable-mdpi-v4/common_google_signin_btn_icon_light_normal_background.9.png"
     },
     {
         "merged": "/Users/hassan/Documents/GitHub/mrworker/build/location/intermediates/merged_res/release/drawable-mdpi-v4/notify_panel_notification_icon_bg.png",
@@ -33,11 +33,11 @@
     },
     {
         "merged": "/Users/hassan/Documents/GitHub/mrworker/build/location/intermediates/merged_res/release/drawable-mdpi-v4/common_google_signin_btn_text_dark_normal_background.9.png",
-        "source": "/Users/hassan/.gradle/caches/transforms-3/7fe54f641cc9e5030b521a76e877b0ca/transformed/jetified-play-services-base-16.0.1/res/drawable-mdpi-v4/common_google_signin_btn_text_dark_normal_background.9.png"
+        "source": "/Users/hassan/.gradle/caches/transforms-3/2c53c1f86170942894f7f0b3d1fe6917/transformed/jetified-play-services-base-16.0.1/res/drawable-mdpi-v4/common_google_signin_btn_text_dark_normal_background.9.png"
     },
     {
         "merged": "/Users/hassan/Documents/GitHub/mrworker/build/location/intermediates/merged_res/release/drawable-mdpi-v4/common_google_signin_btn_text_light_normal_background.9.png",
-        "source": "/Users/hassan/.gradle/caches/transforms-3/7fe54f641cc9e5030b521a76e877b0ca/transformed/jetified-play-services-base-16.0.1/res/drawable-mdpi-v4/common_google_signin_btn_text_light_normal_background.9.png"
+        "source": "/Users/hassan/.gradle/caches/transforms-3/2c53c1f86170942894f7f0b3d1fe6917/transformed/jetified-play-services-base-16.0.1/res/drawable-mdpi-v4/common_google_signin_btn_text_light_normal_background.9.png"
     },
     {
         "merged": "/Users/hassan/Documents/GitHub/mrworker/build/location/intermediates/merged_res/release/drawable-mdpi-v4/notification_bg_low_normal.9.png",

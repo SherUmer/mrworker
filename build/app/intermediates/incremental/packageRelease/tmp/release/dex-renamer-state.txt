@@ -1,4 +1,4 @@
-#Thu Aug 18 21:00:59 PKT 2022
+#Mon Aug 22 09:55:50 PKT 2022
 base.0=/Users/hassan/Documents/GitHub/mrworker/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

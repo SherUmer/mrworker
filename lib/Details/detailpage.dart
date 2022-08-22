@@ -17,7 +17,6 @@ class detailpage extends StatelessWidget {
     final String city;
     city = db.initial_city.toString();
     context.read<DataBase>().Search(curl, city);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFEBECED),
