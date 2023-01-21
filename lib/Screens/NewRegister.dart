@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -8,11 +9,11 @@ import 'package:mrworker/AppState/database.dart';
 import 'package:mrworker/Screens/Login.dart';
 import 'package:provider/provider.dart';
 import 'Api/user_api.dart';
+import 'home.dart';
 
 class RegisterNew extends StatelessWidget {
   RegisterNew({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
-  String photo = '';
 
   final TextEditingController _typeAheadController = TextEditingController();
   final TextEditingController _typeAheadController2 = TextEditingController();
@@ -24,7 +25,7 @@ class RegisterNew extends StatelessWidget {
   final TextEditingController whatsappController = TextEditingController();
   final TextEditingController facebookController = TextEditingController();
   final TextEditingController AboutController = TextEditingController();
-  var img = '';
+  var imageFile = '';
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +76,6 @@ class RegisterNew extends StatelessWidget {
                     const SizedBox(
                       width: 20,
                     ),
-                    // Text(
-                    //     'Register and get access to 54,000 database records'),
                     Flexible(
                       flex: 1,
                       fit: FlexFit.tight,
@@ -96,77 +95,86 @@ class RegisterNew extends StatelessWidget {
                   ],
                 ),
               ),
-              InkWell(
-                onTap: () async {
-                  var pickedFile = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery);
-
-                  dbclass.setProfileImage(File(pickedFile!.path));
-                },
-                child: Consumer<DataBase>(builder: (context, value, child) {
-                  return value.Profilepicture != null
-                      ? SizedBox(
-                          width: double.infinity,
-                          height: 150,
-                          child: CircleAvatar(
-                            child: ClipOval(
-                              child: Image.file(
-                                value.Profilepicture!,
-                                fit: BoxFit.cover,
-                                width: 150,
-                              ),
-                            ),
-                          ),
-                        )
-                      : Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            const SizedBox(
+              Container(
+                alignment: Alignment.topLeft,
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  'Register',
+                  style: GoogleFonts.ubuntu(
+                      fontSize: 25.0,
+                      color: Theme.of(context).secondaryHeaderColor),
+                ),
+              ),
+              Container(
+                alignment: Alignment.topLeft,
+                padding: const EdgeInsets.all(10),
+                child: Center(
+                  child: InkWell(
+                    onTap: () async {
+                      var pickedFile = await ImagePicker()
+                          .pickImage(source: ImageSource.gallery);
+                      // var cropped =await ImageCropper().cropImage(sourcePath: pickedFile!.path,
+                      // aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),compressQuality: 100,
+                      // maxHeight: 70,
+                      // maxWidth: 100,
+                      // compressFormat: ImageCompressFormat.jpg);
+                      dbclass.setProfileImage(File(pickedFile!.path));
+                    },
+                    child: Consumer<DataBase>(builder: (context, value, child) {
+                      return value.Profilepicture != null
+                          ? SizedBox(
                               width: double.infinity,
                               height: 200,
                               child: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                    "https://cdn2.vectorstock.com/i/1000x1000/17/61/male-avatar-profile-picture-vector-10211761.jpg"),
-                              ),
-                            ),
-                            Container(
-                              width: 100,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: Colors.black38,
-                                borderRadius: BorderRadius.circular(18),
-                                border: Border.all(color: Colors.black),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 16.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
-                                    Text(
-                                      'Edit',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                    )
-                                  ],
+                                child: ClipOval(
+                                  child: Image.file(value.Profilepicture!,
+                                      fit: BoxFit.cover, width: 200),
                                 ),
                               ),
                             )
-                          ],
-                        );
-                }),
+                          : Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                const SizedBox(
+                                  width: 200,
+                                  height: 200,
+                                  child: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                        "https://mrworker.pk/img/avatardefault.png"),
+                                  ),
+                                ),
+                                Container(
+                                  width: 100,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black38,
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(color: Colors.black),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 16.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: const [
+                                        Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                        ),
+                                        Text(
+                                          'Image ',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            );
+                    }),
+                  ),
+                ),
               ),
-              Container(
-                  alignment: Alignment.topLeft,
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    'Register',
-                    style: GoogleFonts.ubuntu(
-                        fontSize: 25.0,
-                        color: Theme.of(context).secondaryHeaderColor),
-                  )),
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
@@ -209,6 +217,7 @@ class RegisterNew extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: TextFormField(
+                  obscureText: true,
                   controller: passController,
                   validator: (value) {
                     if (value == null || value.length < 7) {
@@ -284,13 +293,15 @@ class RegisterNew extends StatelessWidget {
                     }
                   },
                   decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor)),
-                      labelText: 'Area',
-                      labelStyle: GoogleFonts.ubuntu(
-                          color: Theme.of(context).primaryColor)),
+                    border: const OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Theme.of(context).primaryColor),
+                    ),
+                    labelText: 'Area',
+                    labelStyle: GoogleFonts.ubuntu(
+                        color: Theme.of(context).primaryColor),
+                  ),
                 ),
               ),
               Container(
@@ -446,113 +457,153 @@ class RegisterNew extends StatelessWidget {
                       var area = Areacontroller.text.toString();
                       var whatsapp = whatsappController.text.toString();
                       var fb_link = facebookController.text.toString();
-                      var image = photo.toString();
-                      print('photo' + image);
-                      await dbclass.userNew(
-                          name: name,
-                          profileImage: image,
-                          email: email,
-                          password: password,
-                          about: Bio,
-                          phone: phone,
-                          speciality: speciality,
-                          city: city,
-                          area: area,
-                          whatsapp: whatsapp,
-                          fb_link: fb_link);
 
-                      // await dbclass.userNew( name,image, email, password, Bio, phone, speciality, city, area, whatsapp, fb_link);
-                      map = dbclass.mapNew;
-                      message = dbclass.mapNew['message'].toString();
-                      print(message);
-                      print('printing user');
-                      print(dbclass.mapNew['user'].toString());
-                      //checking map if its empty or shit
-                      if (map.isEmpty) {
-                        print('map is empty');
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text(
+                            'Registering ...',
+                            style: GoogleFonts.ubuntu(),
+                          ),
+                          content: SizedBox(
+                            height: MediaQuery.of(context).size.height / 4,
+                            width: MediaQuery.of(context).size.height / 4,
+                            child: Consumer<DataBase>(
+                              builder: (context, value, child) {
+                                if (value.mapRegister != null ||
+                                    value.mapRegister.isNotEmpty ||
+                                    value.mapRegister != '{}') {
+                                  print('true');
+                                  print(
+                                      value.mapRegister['message'].toString());
+                                  print(
+                                      'value.mapRegister["message"].toString()');
 
-                        await showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: Text('Warning', style: GoogleFonts.ubuntu()),
-                            content: FutureBuilder(
-                              future: dbclass.userNew(
-                                  name: name,
-                                  profileImage: image,
-                                  email: email,
-                                  password: password,
-                                  about: Bio,
-                                  phone: phone,
-                                  speciality: speciality,
-                                  city: city,
-                                  area: area,
-                                  whatsapp: whatsapp,
-                                  fb_link: fb_link),
-                              builder: (context, AsyncSnapshot snapshot) {
-                                if (snapshot.hasData) {
-                                  return Text(
-                                    snapshot.data.toString(),
-                                    softWrap: true,
-                                    style: GoogleFonts.ubuntu(
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16.0),
-                                  );
-                                } else {
-                                  return const SizedBox(
-                                    height: 100,
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const Home(),
                                     ),
                                   );
+                                  // void _processData() {
+                                  //   // Process your data and upload to server
+                                  //   _formKey.currentState?.reset();
+                                  // }
+                                  //
+                                  // _processData();
+                                  return Text(
+                                      value.mapRegister['message'].toString());
                                 }
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
                               },
                             ),
-                            actions: <Widget>[
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context, rootNavigator: true)
-                                      .pop(); // dismisses only the dialog and returns nothing
-                                },
-                                child: const Text('Try again'),
-                              ),
-                            ],
                           ),
-                        );
-                      } else {
-                        if (message.isNotEmpty && message == 'True') {
-                          //shared prefs !!!
-                          print('True');
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const Mylogin()));
-                        } else if (message.isNotEmpty && message != 'True') {
-                          print('False');
-                          await showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Warning'),
-                              content: Text(message.toString()),
-                              actions: <Widget>[
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pop(); // dismisses only the dialog and returns nothing
-                                  },
-                                  child: const Text('Try again'),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                      }
-
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Login & Best of luck')),
+                        ),
                       );
+                      await dbclass.userRegister(name, email, password, Bio,
+                          phone, speciality, city, area, whatsapp, fb_link);
+                      //
+                      //   map = dbclass.mapNew;
+                      //   message = dbclass.mapNew['message'].toString();
+                      //   print(message);
+                      //   print('printing user');
+                      //   print(dbclass.mapNew['user'].toString());
+                      //   //checking map if its empty or shit
+                      //   if (map.isEmpty) {
+                      //     print('map is empty');
+                      //
+                      //     await showDialog(
+                      //       context: context,
+                      //       builder: (context) => AlertDialog(
+                      //         title: Text('Warning', style: GoogleFonts.ubuntu()),
+                      //         content: FutureBuilder(
+                      //           future: dbclass.userNew(
+                      //               name: name,
+                      //               email: email,
+                      //               password: password,
+                      //               about: Bio,
+                      //               phone: phone,
+                      //               speciality: speciality,
+                      //               city: city,
+                      //               area: area,
+                      //               whatsapp: whatsapp,
+                      //               fb_link: fb_link),
+                      //           builder: (context, AsyncSnapshot snapshot) {
+                      //             if (snapshot.hasData) {
+                      //               return Text(
+                      //                 snapshot.data.toString(),
+                      //                 softWrap: true,
+                      //                 style: GoogleFonts.ubuntu(
+                      //                     color: Theme.of(context).primaryColor,
+                      //                     fontWeight: FontWeight.bold,
+                      //                     fontSize: 16.0),
+                      //               );
+                      //             } else {
+                      //               return const SizedBox(
+                      //                 height: 100,
+                      //                 child: Center(
+                      //                   child: CircularProgressIndicator(),
+                      //                 ),
+                      //               );
+                      //             }
+                      //           },
+                      //         ),
+                      //         actions: <Widget>[
+                      //           ElevatedButton(
+                      //             onPressed: () {
+                      //               Navigator.of(context, rootNavigator: true)
+                      //                   .pop(); // dismisses only the dialog and returns nothing
+                      //             },
+                      //             child: const Text('Try again'),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     );
+                      //   } else {
+                      //     if (message.isNotEmpty && message == 'True') {
+                      //       //shared prefs !!!
+                      //       print('True');
+                      //       Navigator.of(context).pushReplacement(
+                      //           MaterialPageRoute(
+                      //               builder: (BuildContext context) =>
+                      //                   const Mylogin()));
+                      //       // If the form is valid, display a snackbar. In the real world,
+                      //       // you'd often call a server or save the information in a database.
+                      //       ScaffoldMessenger.of(context).showSnackBar(
+                      //         const SnackBar(
+                      //             content: Text('Login & Best of luck')),
+                      //       );
+                      //       Navigator.of(context).pushReplacement(
+                      //           MaterialPageRoute(
+                      //               builder: (BuildContext context) =>
+                      //                   const Mylogin()));
+                      //     } else if (message.isNotEmpty && message != 'True') {
+                      //       print('False');
+                      //       await showDialog(
+                      //         context: context,
+                      //         builder: (context) => AlertDialog(
+                      //           title: const Text('Please wait'),
+                      //           content: Text(message.toString()),
+                      //           actions: <Widget>[
+                      //             ElevatedButton(
+                      //               onPressed: () {
+                      //                 Navigator.of(context, rootNavigator: true)
+                      //                     .pop(); // dismisses only the dialog and returns nothing
+                      //               },
+                      //               child: const Text('Try again'),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       );
+                      //       // If the form is valid, display a snackbar. In the real world,
+                      //       // you'd often call a server or save the information in a database.
+                      //       ScaffoldMessenger.of(context).showSnackBar(
+                      //         SnackBar(content: Text(message.toString())),
+                      //       );
+                      //     }
+                      //   }
                     }
                   },
                   child: Padding(

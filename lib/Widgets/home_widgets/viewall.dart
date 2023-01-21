@@ -21,11 +21,20 @@ class viewall extends StatelessWidget {
       body: Consumer<DataBase>(
         builder: (context, value, child) {
           return value.mapCategory.isEmpty && !value.errorCategory
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.black12,
-                    backgroundColor: Colors.black12,
-                  ),
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 3,
+                    ),
+                    const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.black12,
+                        backgroundColor: Colors.black12,
+                      ),
+                    ),
+                  ],
                 )
               : value.errorCategory
                   ? Text(

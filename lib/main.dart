@@ -3,9 +3,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mrworker/AppState/database.dart';
+import 'package:mrworker/AppState/providers/search_provider.dart';
+import 'package:mrworker/AppState/providers/topRecommendations_provider.dart';
+import 'package:mrworker/AppState/providers/workerDetails_provider.dart';
 import 'package:mrworker/Screens/Splash.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'AppState/providers/popularCategories_provider.dart';
 import 'Services/PushNotificationService.dart';
 import 'firebase_options.dart';
 
@@ -65,36 +69,47 @@ class MyApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-            create: (context) => DataBase(),
-            builder: (context, child) {
-              return MaterialApp(
-                title: 'Mr.Worker',
-                debugShowCheckedModeBanner: false,
-                theme: ThemeData(
-                  colorScheme: ColorScheme.fromSeed(
-                    seedColor: const Color(0xFFECEDEE),
-                    primary: const Color(0xFFECEDEE), //<-- SEE HERE
-                  ),
-                  backgroundColor: const Color(0xFFF5F6F6),
-                  primaryColor: const Color(0xFFa51b1f),
-                  secondaryHeaderColor: const Color(0xFFa51b1f),
-                  // accentColor: const Color(0xFFFE9936),
-                  accentColor: const Color(0xFFa51b1f),
-                  textTheme: TextTheme(
-                    headline1: const TextStyle(
-                      color: Color(0xFFa51b1f),
-                    ),
-                    bodyText1: TextStyle(
-                      color: const Color(0xFFa51b1f).withOpacity(0.5),
-                    ),
-                  ),
-                  primaryTextTheme: GoogleFonts.ubuntuCondensedTextTheme(),
-                ),
-                home: const Splash(),
-              );
-            }),
+        ChangeNotifierProvider.value(
+          value: DataBase(),
+        ),
+        ChangeNotifierProvider.value(
+          value: PopularCategoriesProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: TopRecommendationsProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: SearchProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: WorkerDetailsProvider(),
+        ),
       ],
+      child: MaterialApp(
+        title: 'Mr.Worker',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFFECEDEE),
+            primary: const Color(0xFFECEDEE), //<-- SEE HERE
+          ),
+          backgroundColor: const Color(0xFFF5F6F6),
+          primaryColor: const Color(0xFFa51b1f),
+          secondaryHeaderColor: const Color(0xFFa51b1f),
+          // accentColor: const Color(0xFFFE9936),
+          accentColor: const Color(0xFFa51b1f),
+          textTheme: TextTheme(
+            headline1: const TextStyle(
+              color: Color(0xFFa51b1f),
+            ),
+            bodyText1: TextStyle(
+              color: const Color(0xFFa51b1f).withOpacity(0.5),
+            ),
+          ),
+          primaryTextTheme: GoogleFonts.ubuntuCondensedTextTheme(),
+        ),
+        home: const Splash(),
+      ),
     );
   }
 }

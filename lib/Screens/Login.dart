@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mrworker/AppState/database.dart';
 import 'package:mrworker/Screens/NewRegister.dart';
@@ -85,6 +86,7 @@ class Mylogin extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
+                  keyboardType: TextInputType.number,
                   controller: phoneController,
                   decoration: InputDecoration(
                       border: const OutlineInputBorder(),
@@ -183,8 +185,12 @@ class Mylogin extends StatelessWidget {
                                     .pop(); // dismisses only the dialog and returns nothing
                               },
                               child: Text(
-                                'Try again',
+                                'Try again ?',
                                 style: GoogleFonts.montserrat(),
+                              ),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Theme.of(context).primaryColor),
                               ),
                             ),
                           ],
@@ -193,7 +199,6 @@ class Mylogin extends StatelessWidget {
                     } else {
                       if (message.isNotEmpty && message == 'True') {
                         //shared prefs !!!
-
                         print('True');
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
@@ -222,6 +227,10 @@ class Mylogin extends StatelessWidget {
                                 child: Text(
                                   'Try again',
                                   style: GoogleFonts.montserrat(),
+                                ),
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Theme.of(context).primaryColor),
                                 ),
                               ),
                             ],

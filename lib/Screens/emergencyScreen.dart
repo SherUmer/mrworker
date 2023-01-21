@@ -43,61 +43,61 @@ class EmergencyScreen extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                        title: Text('Select City'),
+                        title: const Text('Select City'),
                         content: SingleChildScrollView(
                           child: ListBody(
                             children: [
                               ListTile(
-                                title: Text('Islamabad'),
+                                title: const Text('Islamabad'),
                                 onTap: () {
                                   dbclass.SetCityForSearchbar1('Islamabad');
                                   Navigator.of(context).pop();
                                 },
                               ),
                               ListTile(
-                                title: Text('Lahore'),
+                                title: const Text('Lahore'),
                                 onTap: () {
                                   dbclass.SetCityForSearchbar1('Lahore');
                                   Navigator.of(context).pop();
                                 },
                               ),
                               ListTile(
-                                title: Text('Peshawar'),
+                                title: const Text('Peshawar'),
                                 onTap: () {
                                   dbclass.SetCityForSearchbar1('Peshawar');
                                   Navigator.of(context).pop();
                                 },
                               ),
                               ListTile(
-                                title: Text('karachi'),
+                                title: const Text('karachi'),
                                 onTap: () {
                                   dbclass.SetCityForSearchbar1('Karachi');
                                   Navigator.of(context).pop();
                                 },
                               ),
                               ListTile(
-                                title: Text('Quetta'),
+                                title: const Text('Quetta'),
                                 onTap: () {
                                   dbclass.SetCityForSearchbar1('Quetta');
                                   Navigator.of(context).pop();
                                 },
                               ),
                               ListTile(
-                                title: Text('Azad Kashmir'),
+                                title: const Text('Azad Kashmir'),
                                 onTap: () {
                                   dbclass.SetCityForSearchbar1('Azad kashmir');
                                   Navigator.of(context).pop();
                                 },
                               ),
                               ListTile(
-                                title: Text('Rawalpindi'),
+                                title: const Text('Rawalpindi'),
                                 onTap: () {
                                   dbclass.SetCityForSearchbar1('Rawalpindi');
                                   Navigator.of(context).pop();
                                 },
                               ),
                               ListTile(
-                                title: Text('Abbottbad'),
+                                title: const Text('Abbottbad'),
                                 onTap: () {
                                   dbclass.SetCityForSearchbar1('Abbottbad');
                                   Navigator.of(context).pop();
@@ -111,7 +111,7 @@ class EmergencyScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                  margin: EdgeInsets.all(15),
+                  margin: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(8)),
@@ -133,7 +133,7 @@ class EmergencyScreen extends StatelessWidget {
                             );
                           },
                         ),
-                        Icon(Icons.arrow_drop_down),
+                        const Icon(Icons.arrow_drop_down),
                       ],
                     ),
                   )),
@@ -146,28 +146,27 @@ class EmergencyScreen extends StatelessWidget {
                 var city = dbclass.initial_city1.toString();
                 await dbclass.Emergency_Search(city);
               },
-              child: Text(
+              child: const Text(
                 'Search',
-                style: TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.black),
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Container(
             alignment: Alignment.center,
-            child: Text('Directory',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            child: const Text('Directory',
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Consumer<DataBase>(builder: (context, val, child) {
             return (val.mapEmergency_Search.isNotEmpty)
-                ?
-                // Text(val.mapEmergency_Search.toString())
-                ListView.builder(
+                ? ListView.builder(
                     shrinkWrap: true,
                     itemCount: val.mapEmergency_Search.length,
                     itemBuilder: (context, index) {
@@ -182,12 +181,12 @@ class EmergencyScreen extends StatelessWidget {
                               title: Text(
                                 eList['emergency_services'][index]['name']
                                     .toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 20),
                               ),
                               subtitle: Row(
                                 children: [
-                                  Icon(Icons.location_on),
+                                  const Icon(Icons.location_on),
                                   Text(eList['emergency_services'][index]
                                           ['city']
                                       .toString()),
@@ -197,7 +196,7 @@ class EmergencyScreen extends StatelessWidget {
                                   onTap: () => launch("tel:" +
                                       eList['emergency_services'][index]
                                           ['phone']),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.call,
                                     color: Colors.blue,
                                   )),
@@ -205,9 +204,9 @@ class EmergencyScreen extends StatelessWidget {
                           ),
                         );
                       } else if (dbclass.initial_city1 == 'Select City') {
-                        return Center(
+                        return const Center(
                             child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(8.0),
                           child: Text(
                             'City is required.',
                             style: TextStyle(
@@ -224,7 +223,7 @@ class EmergencyScreen extends StatelessWidget {
                       }
                     })
                 : const Center(
-                    child: CircularProgressIndicator(),
+                    child: Text('Select a City above to search.'),
                   );
           }),
           //
@@ -317,7 +316,7 @@ class Emergency_detail extends StatelessWidget {
                       fontSize: 15,
                     ),
                   ),
-                  Icon(Icons.call),
+                  const Icon(Icons.call),
                 ],
               ),
             ),

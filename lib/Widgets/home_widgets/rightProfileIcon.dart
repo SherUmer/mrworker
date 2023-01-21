@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mrworker/AppState/database.dart';
+import 'package:mrworker/AppState/models/workerDetails.dart';
+import 'package:mrworker/AppState/providers/workerDetails_provider.dart';
 import 'package:mrworker/Screens/Login.dart';
 import 'package:mrworker/Screens/Profilepage.dart';
 import 'package:mrworker/Widgets/Details/DetailPage2.dart';
 import 'package:mrworker/Widgets/Details/projectDetails.dart';
+import 'package:mrworker/Widgets/Details/workerDetail.dart';
 import 'package:provider/provider.dart';
 
 class RightProfileIcon extends StatelessWidget {
@@ -16,6 +19,7 @@ class RightProfileIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<DataBase>().checkAuth();
     var dbclass = context.read<DataBase>();
+    var workerDetailsProvider = context.read<WorkerDetailsProvider>();
 
     if (dbclass.isLoggedIn == true) {
       print('you are logged in');
@@ -44,8 +48,8 @@ class RightProfileIcon extends StatelessWidget {
                 child: CachedNetworkImage(
                   fit: BoxFit.cover,
                   imageUrl: "https://mrworker.pk/img/avatardefault.png",
-                  width: 50,
-                  height: 50,
+                  width: 40,
+                  height: 40,
                 ),
               ),
             ),
@@ -64,152 +68,157 @@ class RightProfileIcon extends StatelessWidget {
                 context: context,
                 builder: (BuildContext context) {
                   return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
+                    //mainAxisAlignment: MainAxisAlignment.start,
+                    //mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(top: 50, right: 50),
                         child: Container(
-                          padding: const EdgeInsets.all(3.0),
-                          width: MediaQuery.of(context).size.width / 2.5,
+                          //padding: const EdgeInsets.all(3.0),
+                          width: MediaQuery.of(context).size.width * 0.45,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5.0),
                             color: Colors.white,
-                            boxShadow: const [
+                            boxShadow: [
                               BoxShadow(color: Colors.black12, spreadRadius: 2),
                             ],
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              ElevatedButton(
-                                onPressed: () async {
-                                  await dbclass.UserDetail(dbclass.id);
-                                  Map<String, dynamic> userMap =
-                                      dbclass.mapUserDetail['user_detail'][0];
-                                  print(' Profile Page');
-                                  Navigator.of(context).pop();
-                                  print(userMap);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => DetailPage2(
-                                        map: userMap,
+                          child: Material(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                ListTile(
+                                  onTap: () async {
+                                    await dbclass.UserDetail(dbclass.id);
+                                    var userMap =
+                                        workerDetailsProvider.workerDetails;
+                                    print(' Profile Page');
+                                    Navigator.of(context).pop();
+                                    print('Printing your final map' +
+                                        userMap.asMap().toString());
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            WorkerDetailScreen(
+                                          user_id: dbclass.id,
+                                        ),
                                       ),
+                                    );
+                                  },
+                                  title: Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Icon(FontAwesomeIcons.user,
+                                            size: 16.0,
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                        Text(
+                                          'Profile',
+                                          style: GoogleFonts.montserrat(
+                                              color: Colors.black,
+                                              fontSize: 16.0),
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Icon(FontAwesomeIcons.user,
-                                          size: 16.0,
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                      Text(
-                                        'Profile',
-                                        style: GoogleFonts.montserrat(
-                                            color: Colors.black,
-                                            fontSize: 16.0),
-                                      ),
-                                    ],
                                   ),
                                 ),
-                              ),
-                              const Divider(),
-                              ElevatedButton(
-                                onPressed: () {
-                                  var id = dbclass.id.toString();
-                                  Navigator.of(context).pop();
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => profilepage(
-                                        id: id,
+                                // const Divider(),
+                                ListTile(
+                                  onTap: () {
+                                    var id = dbclass.id.toString();
+                                    Navigator.of(context).pop();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => profilepage(
+                                          id: id,
+                                        ),
                                       ),
+                                    );
+                                    print(' Edit Profile Page');
+                                  },
+                                  title: Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Icon(FontAwesomeIcons.edit,
+                                            size: 16.0,
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                        Text(
+                                          ' Edit Profile',
+                                          style: GoogleFonts.montserrat(
+                                              color: Colors.black,
+                                              fontSize: 16.0),
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                  print(' Edit Profile Page');
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Icon(FontAwesomeIcons.edit,
-                                          size: 16.0,
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                      Text(
-                                        ' Edit Profile',
-                                        style: GoogleFonts.montserrat(
-                                            color: Colors.black,
-                                            fontSize: 16.0),
-                                      ),
-                                    ],
                                   ),
                                 ),
-                              ),
-                              const Divider(),
-                              ElevatedButton(
-                                onPressed: () {
-                                  var id = dbclass.id.toString();
-                                  print(' Projects');
-                                  Navigator.of(context).pop();
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          ProjectDetails(user_id: id),
+                                // const Divider(),
+                                ListTile(
+                                  onTap: () {
+                                    var id = dbclass.id.toString();
+                                    print(' Projects');
+                                    Navigator.of(context).pop();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ProjectDetails(user_id: id),
+                                      ),
+                                    );
+                                  },
+                                  title: Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Icon(FontAwesomeIcons.image,
+                                            size: 16.0,
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                        Text(
+                                          'Projects',
+                                          style: GoogleFonts.montserrat(
+                                              color: Colors.black,
+                                              fontSize: 16.0),
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Icon(FontAwesomeIcons.image,
-                                          size: 16.0,
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                      Text(
-                                        'Projects',
-                                        style: GoogleFonts.montserrat(
-                                            color: Colors.black,
-                                            fontSize: 16.0),
-                                      ),
-                                    ],
                                   ),
                                 ),
-                              ),
-                              const Divider(),
-                              ElevatedButton(
-                                onPressed: () {
-                                  dbclass.removeUser();
-                                  dbclass.logOut();
-                                  Navigator.of(context).pop();
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Icon(FontAwesomeIcons.lock,
-                                          size: 16.0,
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                      Text(
-                                        ' Logout',
-                                        style: GoogleFonts.montserrat(
-                                            color: Colors.black,
-                                            fontSize: 16.0),
-                                      ),
-                                    ],
+                                const Divider(),
+                                ListTile(
+                                  onTap: () {
+                                    dbclass.removeUser();
+                                    dbclass.logOut();
+                                    Navigator.of(context).pop();
+                                  },
+                                  title: Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Icon(FontAwesomeIcons.lock,
+                                            size: 16.0,
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                        Text(
+                                          ' Logout',
+                                          style: GoogleFonts.montserrat(
+                                              color: Colors.black,
+                                              fontSize: 16.0),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       )

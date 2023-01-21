@@ -4,31 +4,38 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mrworker/AppState/database.dart';
+import 'package:mrworker/AppState/models/topRecomendations.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
+import 'package:mrworker/AppState/providers/topRecommendations_provider.dart';
 
 class DetailPage2 extends StatelessWidget {
   DetailPage2({Key? key, required this.map}) : super(key: key);
+
+  // Map map;
+
+  final map;
+
   launchWhatsApp() async {
     final link = WhatsAppUnilink(
-      phoneNumber: "+92" + map['whatsapp'],
+      phoneNumber: "+92" + map.whatsapp,
       text: "Hey!" +
-          map['name'] +
+          map.name +
           "." +
-          "I'm inquiring about the Services which you provid on Mr.Worker",
+          "I'm inquiring about the Services which you provide on Mr.Worker",
     );
     await launch('$link');
   }
 
-  Map<String, dynamic> map;
-
   @override
   Widget build(BuildContext context) {
-    String tags = map['tags'];
+    String tags = map.tags;
     List<String> tlist = tags.split(",");
     var dbclass = context.read<DataBase>();
-    dbclass.fetchProjects(map['id']);
+    dbclass.fetchProjects(map.id);
+    // print('Printing your final map!');
+    // print(map);
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 222, 218, 218),
@@ -49,7 +56,7 @@ class DetailPage2 extends StatelessWidget {
                   Card(
                     child: ListTile(
                       leading: CachedNetworkImage(
-                        imageUrl: map['image'].toString(),
+                        imageUrl: map.image,
                         imageBuilder: (context, imageProvider) => Container(
                           width: 50.0,
                           height: 50.0,
@@ -68,7 +75,7 @@ class DetailPage2 extends StatelessWidget {
                             const Icon(Icons.error),
                       ),
                       title: Text(
-                        map['name'].toString(),
+                        map.name.toString(),
                         style: GoogleFonts.ubuntu(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
@@ -115,7 +122,7 @@ class DetailPage2 extends StatelessWidget {
                                           Colors.blue),
                                 ),
                                 onPressed: () => launch(
-                                  "tel:" + map['phone'].toString(),
+                                  "tel:" + map.phone.toString(),
                                 ),
                                 child: const Padding(
                                   padding: EdgeInsets.all(3.0),
@@ -126,14 +133,14 @@ class DetailPage2 extends StatelessWidget {
                           ],
                         ),
                       ),
-                      subtitle: Text(map['city'].toString()),
+                      subtitle: Text(map.city.toString()),
                     ),
                   ),
                   SizedBox(
                     height: 30,
                     child: Center(
                         child: Text(
-                      map['speciality'].toString(),
+                      map.speciality.toString(),
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 26),
                     )
@@ -179,7 +186,7 @@ class DetailPage2 extends StatelessWidget {
                           child: Container(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              map['name'].toString(),
+                              map.name,
                               style: const TextStyle(
                                 fontSize: 15,
                               ),
@@ -215,7 +222,7 @@ class DetailPage2 extends StatelessWidget {
                           child: Container(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              map['phone'].toString(),
+                              map.phone,
                               style: const TextStyle(
                                 fontSize: 15,
                               ),
@@ -251,7 +258,7 @@ class DetailPage2 extends StatelessWidget {
                           child: Container(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              map['city'].toString(),
+                              map.city,
                               style: const TextStyle(
                                 fontSize: 15,
                               ),
@@ -287,7 +294,7 @@ class DetailPage2 extends StatelessWidget {
                           child: Container(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              map['area'].toString(),
+                              map.area.toString(),
                               style: const TextStyle(
                                 fontSize: 15,
                               ),
@@ -323,7 +330,7 @@ class DetailPage2 extends StatelessWidget {
                           child: Container(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              map['email'].toString(),
+                              map.email.toString(),
                               style: const TextStyle(
                                 fontSize: 15,
                               ),
@@ -359,7 +366,7 @@ class DetailPage2 extends StatelessWidget {
                           child: Container(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              map['about'].toString(),
+                              map.about.toString(),
                               style: const TextStyle(
                                 fontSize: 15,
                               ),

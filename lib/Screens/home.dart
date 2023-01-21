@@ -16,9 +16,9 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<DataBase>().fetchPopular;
+    // context.read<DataBase>().fetchPopular;
     context.read<DataBase>().fetchCategory;
-    context.read<DataBase>().fetchRecommendation;
+    // context.read<DataBase>().fetchRecommendation;
     context.read<DataBase>().getCity();
     context.read<DataBase>().checkAuth();
 
@@ -27,6 +27,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       drawer: const Worker_Drawer(),
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: const Color(0xffEBECED),
         title: const Padding(
           padding: EdgeInsets.only(left: 60),
@@ -36,7 +37,10 @@ class Home extends StatelessWidget {
           ),
         ),
         actions: const [
-          RightProfileIcon(),
+          Padding(
+            padding: EdgeInsets.all(2.0),
+            child: RightProfileIcon(),
+          ),
         ],
         iconTheme: const IconThemeData(color: Colors.black),
       ),

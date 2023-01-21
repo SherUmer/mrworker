@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mrworker/AppState/database.dart';
+import 'package:mrworker/searchpage.dart';
 import 'package:provider/provider.dart';
 import '../../Screens/Api/user_api.dart';
 import '../../Screens/data/network_type.dart';
@@ -19,7 +20,7 @@ class SearchCityBar extends StatelessWidget {
       height: 50,
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
               color: Color(0xffd4d4d9), spreadRadius: 0.5, blurRadius: 5.0),
         ],
@@ -30,15 +31,32 @@ class SearchCityBar extends StatelessWidget {
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
+              const SizedBox(
+                width: 8.0,
+              ),
               const Icon(Icons.search),
-              SizedBox(
-                height: 50,
-                width: 200,
-                child: NetworkTypeAheadPage(),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => SearchPage(),
+                    ),
+                  );
+                },
+                child: const SizedBox(
+                    height: 50,
+                    width: 200,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 8.0, top: 15.0),
+                      child: Text('Type Search Here'),
+                    )
+
+                    //NetworkTypeAheadPage(),
+                    ),
               ),
             ],
           ),
@@ -126,63 +144,6 @@ class SearchCityBar extends StatelessWidget {
                                       },
                                     ),
                                   ),
-                                  // ListTile(
-                                  //   title: const Text('Islamabad'),
-                                  //   onTap: () {
-                                  //     dbclass.SetCityForSearchbar('Islamabad');
-                                  //     Navigator.of(context).pop();
-                                  //   },
-                                  // ),
-                                  // ListTile(
-                                  //   title: const Text('Lahore'),
-                                  //   onTap: () {
-                                  //     dbclass.SetCityForSearchbar('Lahore');
-                                  //     Navigator.of(context).pop();
-                                  //   },
-                                  // ),
-                                  // ListTile(
-                                  //   title: const Text('Peshawar'),
-                                  //   onTap: () {
-                                  //     dbclass.SetCityForSearchbar('Peshawar');
-                                  //     Navigator.of(context).pop();
-                                  //   },
-                                  // ),
-                                  // ListTile(
-                                  //   title: const Text('karachi'),
-                                  //   onTap: () {
-                                  //     dbclass.SetCityForSearchbar('karachi');
-                                  //     Navigator.of(context).pop();
-                                  //   },
-                                  // ),
-                                  // ListTile(
-                                  //   title: const Text('Quetta'),
-                                  //   onTap: () {
-                                  //     dbclass.SetCityForSearchbar('Quetta');
-                                  //     Navigator.of(context).pop();
-                                  //   },
-                                  // ),
-                                  // ListTile(
-                                  //   title: const Text('Azad Kashmir'),
-                                  //   onTap: () {
-                                  //     dbclass.SetCityForSearchbar(
-                                  //         'Azad kashmir');
-                                  //     Navigator.of(context).pop();
-                                  //   },
-                                  // ),
-                                  // ListTile(
-                                  //   title: const Text('rawalpindi'),
-                                  //   onTap: () {
-                                  //     dbclass.SetCityForSearchbar('Rawalpindi');
-                                  //     Navigator.of(context).pop();
-                                  //   },
-                                  // ),
-                                  // ListTile(
-                                  //   title: const Text('Abbotabad'),
-                                  //   onTap: () {
-                                  //     dbclass.SetCityForSearchbar('Abbotabad');
-                                  //     Navigator.of(context).pop();
-                                  //   },
-                                  // ),
                                 ],
                               ),
                             ));
@@ -199,6 +160,9 @@ class SearchCityBar extends StatelessWidget {
                     );
                   },
                 ),
+              ),
+              const SizedBox(
+                width: 8.0,
               ),
             ],
           ),

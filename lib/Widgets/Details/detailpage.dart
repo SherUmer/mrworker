@@ -2,192 +2,67 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mrworker/AppState/database.dart';
+import 'package:mrworker/AppState/models/searchModel.dart';
+import 'package:mrworker/AppState/providers/search_provider.dart';
 import 'package:mrworker/Widgets/Details/DetailPage2.dart';
+import 'package:mrworker/Widgets/LoadingWidgets/verticalListLoading.dart';
 import 'package:provider/provider.dart';
 
-class detailpage extends StatelessWidget {
+class detailpage extends StatefulWidget {
   final String curl;
-
   const detailpage({Key? key, required this.curl}) : super(key: key);
-
   @override
-  Widget build(BuildContext context) {
+  _detailpageState createState() => _detailpageState();
+}
+
+class _detailpageState extends State<detailpage> {
+  @override
+  void initState() {
     var db = context.read<DataBase>();
     final String city;
     city = db.initial_city.toString();
-    context.read<DataBase>().Search(curl, city);
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<SearchProvider>(context, listen: false)
+          .getSearch(city, widget.curl);
+    });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFEBECED),
         foregroundColor: Colors.black,
-        title: const Text('Top Workers'),
+        title: (widget.curl != '')
+            ? Text(widget.curl.toString())
+            : const Text('Top Workers'),
         centerTitle: true,
       ),
-
-      body: FutureBuilder(
-        future: db.Search(curl, city),
-        builder: (context, snapshot) {
-          print(db.mapSearch.toString());
-
-          if (snapshot.hasData) {
-            return ListView.builder(
-                physics: const ClampingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: db.mapSearch['service_search'].length,
-                itemBuilder: (BuildContext context, index) {
-                  return SearchCard(map: db.mapSearch['service_search'][index]);
-                });
-          } else {
-            print('not shit !');
-            print(curl);
-            print(city);
-          }
-
-          if (db.mapSearch['service_search'] == null) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.black12,
-                backgroundColor: Colors.black12,
-              ),
-            );
-          }
-
-          if (db.mapSearch['service_search'][0]['msg'] == null) {
-            print('its null');
-            return ListView.builder(
-                physics: const ClampingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: db.mapSearch['service_search'].length,
-                itemBuilder: (BuildContext context, index) {
-                  return SearchCard(map: db.mapSearch['service_search'][index]);
-                });
-          } else {
-            return Center(
-                child: Text('Sorry there is no data in This Category'));
-          }
-
-          // List myList = db.mapSearch['service_search'];
-          // return ListView.builder(
-          //   itemCount: myList.length,
-          //     itemBuilder: (BuildContext context, index){
-          //     return ListTile(
-          //       leading: CachedNetworkImage(
-          //         imageUrl: db.mapSearch['service_search'][index]['image'],
-          //         width: 50,
-          //         fit: BoxFit.cover,
-          //       ),
-          //       title: Text(db.mapSearch['service_search'][index]['name']),
-          //     );
-          //   // return Container();
-          // });
-
-          // Text(db.mapSearch['service_search'].toString());
-
-          //
-          //   ListView.builder(
-          //   physics: const ClampingScrollPhysics(),
-          //
-          //   shrinkWrap: true,
-          //   itemCount: db.mapSearch['service_search'].length,
-          //   itemBuilder: (BuildContext context, index) {
-          //     if(db.mapSearch['service_search'][index]
-          //     ['msg'] !=
-          //         'True') {
-          //       return Center(
-          //         child: Container(
-          //           width: double.infinity,
-          //           height: 500,
-          //           alignment: Alignment.center,
-          //           padding:
-          //           const EdgeInsets.only(top: 200),
-          //           child: Text(db.mapSearch['service_search'][index]
-          //           ['msg']
-          //               .toString()),
-          //         ),
-          //       );
-          //     }else{
-          //       print('else Working');
-          //
-          //       return SearchCard(
-          //           map: db.mapSearch['service_search']
-          //           [index]);
-          //     }
-          //   },
-          // );
-          //
-
-          //
-          //   Consumer<DataBase>(
-          //     builder: (context, value, child) {
-          //   return value.mapSearch.isEmpty && !value.errorSearch
-          //       ? const Center(child: CircularProgressIndicator())
-          //       : value.errorSearch
-          //       ? Text(
-          //     'Oops, something went wrong .${value.errorMessageSearch}',
-          //     textAlign: TextAlign.center,
-          //   ) : ListView.builder(
-          //     physics: const ClampingScrollPhysics(),
-          //
-          //     shrinkWrap: true,
-          //     itemCount: value.mapSearch['service_search'].length,
-          //     itemBuilder: (BuildContext context, index) {
-          //       if(value.mapSearch['service_search'][0]
-          //       ['msg'] !=
-          //           'True') {
-          //         return Center(
-          //           child: Container(
-          //             width: double.infinity,
-          //             height: 500,
-          //             alignment: Alignment.center,
-          //             padding:
-          //             const EdgeInsets.only(top: 200),
-          //             child: Text(value
-          //                 .mapSearch['service_search'][0]
-          //             ['msg']
-          //                 .toString()),
-          //           ),
-          //         );
-          //       }else{
-          //         print('else Working');
-          //
-          //         return SearchCard(
-          //             map: value.mapSearch['service_search']
-          //             [index]);
-          //       }
-          //     },
-          //   );
-          // },
-          // );
-          //
-          //
-        },
+      body: Consumer<SearchProvider>(
+        builder: ((context, value, child) {
+          return value.isLoading
+              ? VerticalListLoading()
+              : ListView.builder(
+                  physics: const ClampingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: value.searchModel.length,
+                  itemBuilder: (BuildContext context, index) {
+                    return SearchCard(map: value.searchModel[index]);
+                  });
+        }),
       ),
-
-      // Consumer<DataBase>(
-      //   builder: (context,value,child){
-      //     print(value.toString());
-      //     return Container();
-      //     },
-      // ),
-
-      //
-
-      //
     );
   }
 }
 
 class SearchCard extends StatelessWidget {
   const SearchCard({Key? key, required this.map}) : super(key: key);
-
-  final Map<String, dynamic> map;
-
+  final map;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print(map);
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) {
@@ -212,8 +87,7 @@ class SearchCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image:
-                          CachedNetworkImageProvider(map['image'].toString()),
+                      image: CachedNetworkImageProvider(map.image.toString()),
                     ),
                   ),
                 ),
@@ -226,7 +100,7 @@ class SearchCard extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 2,
                         child: Text(
-                          map['name'].toString(),
+                          map.name.toString(),
                           style: GoogleFonts.ubuntu(
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
@@ -237,7 +111,7 @@ class SearchCard extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        map['city'].toString(),
+                        map.city.toString(),
                         style: GoogleFonts.ubuntu(
                             fontSize: 12.0, color: Colors.black),
                       ),
@@ -250,7 +124,7 @@ class SearchCard extends StatelessWidget {
                           ),
                           Expanded(
                             child: Text(
-                              map['area'].toString(),
+                              map.area.toString(),
                               maxLines: 1,
                               style: GoogleFonts.ubuntu(
                                   fontSize: 12.0, color: Colors.black),
@@ -268,7 +142,7 @@ class SearchCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: Text(
-                  map['speciality'].toString(),
+                  map.speciality.toString(),
                   style: GoogleFonts.ubuntu(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,

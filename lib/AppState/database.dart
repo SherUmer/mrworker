@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+// import 'package:mrworker/AppState/models/PopularModel.dart';
+// import 'package:mrworker/AppState/services/popularService.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -72,16 +74,12 @@ class DataBase extends ChangeNotifier {
   String get errorMessageLogin => _errorMessageLogin;
 
   Future<void> userLogin(String phone, String password) async {
-    String completeurl = 'https://mrworker.pk/API/loginapi.php?phone=' +
-        phone +
-        '&password=' +
-        password;
+    String completeurl =
+        'https://mrworker.pk/API/loginapi.php?phone=$phone&password=$password';
     print(completeurl);
     final response = await http.get(
-      Uri.parse('https://mrworker.pk/API/loginapi.php?phone=' +
-          phone +
-          '&password=' +
-          password),
+      Uri.parse(
+          'https://mrworker.pk/API/loginapi.php?phone=$phone&password=$password'),
     );
     if (response.statusCode == 200) {
       try {
@@ -94,7 +92,15 @@ class DataBase extends ChangeNotifier {
           name = _mapLogin['user'][0]['name'].toString();
           phone = _mapLogin['user'][0]['phone'].toString();
           image = _mapLogin['user'][0]['image'].toString();
-          addAuth(id, name, email, password, phone, image);
+          phone = _mapLogin['user'][0]['phone'].toString();
+          String about = _mapLogin['user'][0]['about'].toString();
+          String speciality = _mapLogin['user'][0]['speciality'].toString();
+          String city = _mapLogin['user'][0]['city'].toString();
+          String area = _mapLogin['user'][0]['area'].toString();
+          String whatsapp = _mapLogin['user'][0]['whatsapp'].toString();
+          String fb_link = _mapLogin['user'][0]['fb_link'].toString();
+          addAuth(id, name, email, password, phone, image, about, speciality,
+              city, area, whatsapp, fb_link);
         }
       } catch (e) {
         _errorLogin = true;
@@ -119,18 +125,20 @@ class DataBase extends ChangeNotifier {
 
   String get errorMessageRegister => _errorMessageRegister;
 
-  Future<void> userRegister(String name, String email, String password,
-      String phone, String image) async {
-    String completeurl = 'https://mrworker.pk/API/registrationapi.php?name=' +
-        name +
-        '&email=' +
-        email +
-        '&password=' +
-        password +
-        '&phone=' +
-        phone +
-        '&image=' +
-        image;
+  Future<void> userRegister(
+      String name,
+      String email,
+      String password,
+      String about,
+      String phone,
+      String speciality,
+      String city,
+      String area,
+      String whatsapp,
+      String fb_link) async {
+    String completeurl =
+        // 'https://mrworker.pk/API/registrationapi.php?name=$name&email=$email&password=$password&phone=$phone&image=$image';
+        'https://mrworker.pk/API/registrationapi.php?name=$name&email=$email&password=$password&about=$about&phone=$phone&speciality=$speciality&city=$city&area=$area&whatsapp=$whatsapp&fb_link=$fb_link';
     print(completeurl);
     final response;
 
@@ -140,14 +148,15 @@ class DataBase extends ChangeNotifier {
     if (Profilepicture != null) {
       String base64Image = base64Encode(Profilepicture!.readAsBytesSync());
       String fileName = Profilepicture!.path.split("/").last;
-      print(Profilepicture.toString() + 'picture printing');
+      print('${Profilepicture}picture printing');
 
       response = await http.post(Uri.parse(completeurl), body: {
         "image": base64Image,
         "name": fileName,
       });
+      print('prinitng repsonse ' + response.toString());
       if (response.statusCode == 200) {
-        print(response.body.toString() + "  printing mapregister");
+        print("${response.body}  printing mapregister");
 
         try {
           _mapRegister = jsonDecode(response.body);
@@ -162,7 +171,8 @@ class DataBase extends ChangeNotifier {
             phone = _mapRegister['user']['phone'].toString();
             image = _mapRegister['user']['image'].toString();
             print(_mapRegister.toString());
-            addAuth(id, name, email, password, phone, image);
+            addAuth(id, name, email, password, phone, image, about, speciality,
+                city, area, whatsapp, fb_link);
           }
         } catch (e) {
           _errorRegister = true;
@@ -177,66 +187,6 @@ class DataBase extends ChangeNotifier {
     }
 
     notifyListeners();
-  }
-
-  Map<String, dynamic> mapUserRegister = {};
-
-  Map<String, dynamic> get _mapUserRegister => mapUserRegister;
-
-  Future<void> uploadImage(
-    String name,
-    String email,
-    String password,
-    String phone,
-    String Bio,
-    String speciality,
-    String fb_link,
-    String whatsapp,
-    String city,
-  ) async {
-    String URL = 'https://mrworker.pk/API/registrationapi.php?name=' +
-        name +
-        '&email=' +
-        email +
-        '&password=' +
-        password +
-        '&phone=' +
-        phone +
-        '&about=' +
-        Bio +
-        '&speciality=' +
-        speciality +
-        '&city=' +
-        city +
-        '&facebook=' +
-        fb_link +
-        '&whatsapp=' +
-        whatsapp;
-    print(URL);
-    final response;
-    response = await http.post(Uri.parse(URL));
-    print("printing responce" + response.toString());
-
-    if (response.statusCode == 200) {
-      mapUserRegister = jsonDecode(response.body);
-      print('prinitng From Map' + mapUserRegister.toString());
-      print('its 200');
-      print(response.body.toString());
-
-      id = _mapRegister['user']['id'];
-      name = _mapRegister['user']['name'].toString();
-      email = _mapRegister['user']['email'].toString();
-      phone = _mapRegister['user']['phone'].toString();
-      image = _mapRegister['user']['image'].toString();
-      print(_mapRegister.toString());
-      addAuth(id, name, email, password, phone, image);
-      print(id.toString() + 'printing id');
-
-      var abPost = jsonDecode(response.body);
-      print(abPost.toString() + 'ab post');
-      print('ab ye jae ga Login py');
-      notifyListeners();
-    }
   }
 
   var id;
@@ -271,7 +221,8 @@ class DataBase extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addAuth(id, name, email, password, phone, image) async {
+  Future<void> addAuth(id, name, email, password, phone, image, about,
+      speciality, city, area, whatsapp, fb_link) async {
     print(id + ' id is being printed');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('id', id);
@@ -282,6 +233,7 @@ class DataBase extends ChangeNotifier {
     prefs.setString('phone', phone);
     prefs.setString('image', image);
     print('auth added ');
+    isLoggedIn = true;
     notifyListeners();
   }
 
@@ -314,15 +266,8 @@ class DataBase extends ChangeNotifier {
   String get errorMessageLocation => _errorMessageLocation;
 
   Future<void> Getlocation(String lat, String lng) async {
-    // String completeurl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' +
-    //     lat+',' + lng+'&key=AIzaSyA_LoRMvCG3IiIXtGcEybX6eyd0ijKFZAw&sensor=false';
-    // print(completeurl);
     final response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=' +
-            lat +
-            ',' +
-            lng +
-            '&key=AIzaSyA_LoRMvCG3IiIXtGcEybX6eyd0ijKFZAw&sensor=false'));
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=AIzaSyA_LoRMvCG3IiIXtGcEybX6eyd0ijKFZAw&sensor=false'));
 
     if (response.statusCode == 200) {
       try {
@@ -358,7 +303,7 @@ class DataBase extends ChangeNotifier {
     x = await position.latitude;
     y = await position.longitude;
     Getlocation(x.toString(), y.toString());
-    print(lastPosition.toString() + 'last position');
+    print('${lastPosition}last position');
     notifyListeners();
   }
 
@@ -380,7 +325,7 @@ class DataBase extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('Cityname', Cityname);
     Cityname = prefs.getString('Cityname') ?? '';
-    print('printing city name' + Cityname);
+    print('printing city name$Cityname');
     SetCityForSearchbar(Cityname.toString());
 
     notifyListeners();
@@ -494,11 +439,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> Search(String curl, String city) async {
     final response = await http.get(
-      Uri.parse('https://mrworker.pk/API/search?' +
-          'city=' +
-          city +
-          '&type_tag=' +
-          curl),
+      Uri.parse('https://mrworker.pk/API/search?city=$city&type_tag=$curl'),
     );
     if (response.statusCode == 200) {
       try {
@@ -641,11 +582,7 @@ class DataBase extends ChangeNotifier {
 
   Future<void> Search1(String curl, String city) async {
     final response = await http.get(
-      Uri.parse('https://mrworker.pk/API/search?' +
-          'city=' +
-          city +
-          '&type_tag=' +
-          curl),
+      Uri.parse('https://mrworker.pk/API/search?city=$city&type_tag=$curl'),
     );
     if (response.statusCode == 200) {
       try {
@@ -712,7 +649,7 @@ class DataBase extends ChangeNotifier {
     if (response.statusCode == 200) {
       try {
         _mapEmergency_Search = jsonDecode(response.body);
-        print('Printing emergency services' + _mapEmergency_Search.toString());
+        print('Printing emergency services$_mapEmergency_Search');
         _errorEmergency_Search = false;
       } catch (e) {
         _errorEmergency_Search = true;
@@ -772,7 +709,6 @@ class DataBase extends ChangeNotifier {
 
   Future<void> userNew(
       {required String name,
-      required String profileImage,
       required String email,
       required String password,
       required String about,
@@ -782,72 +718,99 @@ class DataBase extends ChangeNotifier {
       required String area,
       required String whatsapp,
       required String fb_link}) async {
-    String completeurl = 'https://mrworker.pk/API/registrationapi.php?name=' +
-        name +
-        '&email=' +
-        email +
-        '&password=' +
-        password +
-        '&about=' +
-        about +
-        '&phone=' +
-        phone +
-        '&speciality=' +
-        speciality +
-        '&city=' +
-        city +
-        '&area=' +
-        area +
-        '&whatsapp=' +
-        whatsapp +
-        '&fb_link=' +
-        fb_link;
+    String completeurl =
+        'https://mrworker.pk/API/registrationapi.php?name=$name&email=$email&password=$password&about=$about&phone=$phone&speciality=$speciality&city=$city&area=$area&whatsapp=$whatsapp&fb_link=$fb_link';
     print(completeurl);
-    if (Profilepicture != null) {
-      String base64Image = base64Encode(Profilepicture!.readAsBytesSync());
-      String fileName = Profilepicture!.path.split("/").last;
-      print(Profilepicture.toString() + 'picture printing');
-
-      var response = await http.post(Uri.parse(completeurl), body: {
-        "profileImage": base64Image,
-        "name": fileName,
-      });
-
-      // if(response.body != ''){
-      //   print('this is being called');
-      //   print(response.body.toString());
-      // }else{
-      //   print('response body is empty');
-      // }
-
-      if (response.statusCode == 200) {
-        try {
-          _mapNew = jsonDecode(response.body);
-
-          print('printing map');
-          print(_mapNew.toString());
-          _errorNew = false;
-          if (_mapNew.isNotEmpty && _mapNew['message'] == "True") {
-            print('yes its true from db');
-            print(_mapNew['user'][0]['id'].toString());
-            id = _mapNew['user'][0]['id'].toString();
-            name = _mapNew['user'][0]['name'].toString();
-            phone = _mapNew['user'][0]['phone'].toString();
-            image = _mapNew['user'][0]['image'].toString();
-            addAuth(id, name, email, password, phone, image);
-          }
-        } catch (e) {
-          _errorLogin = true;
-          _errorMessageLogin = e.toString();
-          _mapLogin = {};
+    final response = await http.get(Uri.parse(completeurl));
+    if (response.statusCode == 200) {
+      try {
+        _mapNew = jsonDecode(response.body);
+        // print('printing mapnew from database line 752');
+        // print(_mapNew.toString());
+        _errorNew = false;
+        if (_mapNew.isNotEmpty && _mapNew['message'] == "True") {
+          print('yes its True from db json');
+          // print(_mapNew['user']['id'].toString());
+          id = _mapNew['user']['id'].toString();
+          name = _mapNew['user']['name'].toString();
+          phone = _mapNew['user']['phone'].toString();
+          image = _mapNew['user']['image'].toString();
+          String fb_link = _mapNew['user']['fb_link'].toString();
+          addAuth(id, name, email, password, phone, image, about, phone,
+              speciality, city, area, whatsapp);
         }
-      } else {
-        _errorLogin = true;
-        _errorMessageLogin = 'Error : It could be your Internet connection.';
-        _mapLogin = {};
+      } catch (e) {
+        _errorNew = true;
+        _errorMessageNew = e.toString();
+        _mapNew = {};
       }
-      notifyListeners();
+    } else {
+      _errorNew = true;
+      _errorMessageNew = 'Error : It could be your Internet connection.';
+      _mapNew = {};
     }
+    notifyListeners();
+  }
+
+  Map<String, dynamic> _mapEditProfile = {};
+  bool _errorEditProfile = false;
+  String _errorMessageEditProfile = '';
+
+  Map<String, dynamic> get mapEditProfile => _mapEditProfile;
+
+  bool get errorEditProfile => _errorEditProfile;
+
+  String get errorMessageEditProfile => _errorMessageEditProfile;
+
+  Future<void> editProfile(
+      {required String name,
+      required String email,
+      required String password,
+      required String about,
+      required String phone,
+      required String speciality,
+      required String city,
+      required String area,
+      required String whatsapp,
+      required String fb_link}) async {
+    String completeurl =
+        'https://mrworker.pk/API/edit_api.php?name=$name&email=$email&password=$password&about=$about&phone=$phone&category=$speciality&city=$city&area=$area&whatsapp=$whatsapp&fb_link=$fb_link&id=$id';
+    print(completeurl);
+    final response = await http.get(Uri.parse(completeurl));
+    if (response.statusCode == 200) {
+      try {
+        _mapNew = jsonDecode(response.body);
+        // print('printing mapnew from database line 752');
+        // print(_mapNew.toString());
+        _errorNew = false;
+        if (_mapNew.isNotEmpty && _mapNew['message'] == "True") {
+          print('yes its True from db json');
+          // print(_mapNew['user']['id'].toString());
+          id = _mapNew['user']['id'].toString();
+          name = _mapNew['user']['name'].toString();
+          phone = _mapNew['user']['phone'].toString();
+          image = _mapNew['user']['image'].toString();
+          phone = _mapNew['user']['phone'].toString();
+          city = _mapNew['user']['city'].toString();
+          area = _mapNew['user']['area'].toString();
+          about = _mapNew['user']['about'].toString();
+          speciality = _mapNew['user']['speciality'].toString();
+          whatsapp = _mapNew['user']['whatsapp'].toString();
+          fb_link = _mapNew['user']['fb_link'].toString();
+          addAuth(id, name, email, password, phone, image, city, area, about,
+              speciality, whatsapp, fb_link);
+        }
+      } catch (e) {
+        _errorNew = true;
+        _errorMessageNew = e.toString();
+        _mapNew = {};
+      }
+    } else {
+      _errorNew = true;
+      _errorMessageNew = 'Error : It could be your Internet connection.';
+      _mapNew = {};
+    }
+    notifyListeners();
   }
 
   Map<String, dynamic> _mapAddproject = {};
@@ -868,7 +831,7 @@ class DataBase extends ChangeNotifier {
     if (ProjectImage != null) {
       String base64Image = base64Encode(ProjectImage!.readAsBytesSync());
       String fileName = ProjectImage!.path.split("/").last;
-      print(ProjectImage.toString() + ' project image printing');
+      print('$ProjectImage project image printing');
 
       var response = await http.post(Uri.parse(completeurl), body: {
         "image": base64Image,
@@ -880,7 +843,7 @@ class DataBase extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         print('Status is 200');
-        print(response.body.toString() + "printing responce");
+        print("${response.body}printing responce");
         try {
           _mapAddproject = jsonDecode(response.body);
 
@@ -922,14 +885,14 @@ class DataBase extends ChangeNotifier {
     String completeurl = 'https://mrworker.pk/API/add_gallery_images?';
     for (var i = 0; i < imageFileList!.length; i++) {
       print(i.toString());
-      File? galleryimage = File(imageFileList![i]!.path);
+      File? galleryimage = File(imageFileList![i].path);
 
       print(galleryimage);
 
-      String base64Image = base64Encode(galleryimage!.readAsBytesSync());
-      print(base64Image.toString() + 'base64');
-      String fileName = galleryimage!.path.split("/").last;
-      print(galleryimage.toString() + ' project image printing');
+      String base64Image = base64Encode(galleryimage.readAsBytesSync());
+      print('${base64Image}base64');
+      String fileName = galleryimage.path.split("/").last;
+      print('$galleryimage project image printing');
 
       var response = await http.post(Uri.parse(completeurl), body: {
         "image": base64Image,
@@ -973,9 +936,6 @@ class DataBase extends ChangeNotifier {
   }
 
   void initialValues() {
-    _mapRegister = {};
-    _errorRegister = false;
-    _errorMessageRegister = '';
     _mapLogin = {};
     _errorLogin = false;
     _errorMessageLogin = '';
@@ -997,4 +957,33 @@ class DataBase extends ChangeNotifier {
 
     notifyListeners();
   }
+
+//for search city
+
+  bool isTyping = false;
+
+  void searchData(String text) {
+    if (text.isNotEmpty) {
+      isTyping = true;
+      notifyListeners();
+    }
+    notifyListeners();
+  }
+
+  //Provider with popular categories model
+  // List<PopularModel> popCat = [];
+  // void updatePopularCategories(List<PopularModel> popCat) {
+  //   this.popCat = popCat;
+  //   notifyListeners();
+  // }
+
+  // List popularList = [];
+  // bool loadingPopular = false;
+
+  // getPopularData() async {
+  //   loadingPopular = true;
+  //   popularList = (await getPopularCategories())!;
+  //   loadingPopular = false;
+  //   notifyListeners();
+  // }
 }
